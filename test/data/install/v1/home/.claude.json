@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "@@HOME@@": {
+      "hasTrustDialogAccepted": true
+    }
+  }
+}

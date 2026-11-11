@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 2,
+  "plugin": {
+    "name": "wf",
+    "version": "2.0.0",
+    "description": "Fixture plugin for the compile tests.",
+    "author": {
+      "name": "Procisz"
+    }
+  },
+  "appDir": "ai-agents-setup",
+  "claude": {
+    "minVersion": "2.1.312"
+  },
+  "node": {
+    "minMajor": 22
+  },
+  "models": {
+    "claude-opus-5-5": {
+      "label": "Opus 5.5",
+      "window": 1000000
+    },
+    "claude-sonnet-5-5": {
+      "label": "Sonnet 5.5",
+      "window": 1000000
+    },
+    "claude-haiku-5-5": {
+      "label": "Haiku 5.5",
+      "window": 1000000
+    }
+  },
+  "install": {
+    "models": ["claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"],
+    "requiredRoles": ["coder"]
+  },
+  "context": {
+    "window": 1000000,
+    "warnTokens": 500000,
+    "handoffTokens": 800000,
+    "compactTokens": 850000,
+    "autoCompactPctOverride": "86.74",
+    "bufferStepTokens": 50000,
+    "overEveryCalls": 5,
+    "keepwarmMinutes": 58,
+    "keepwarmPollSeconds": 20,
+    "keepwarmShortMinutes": 4,
+    "keepwarmShortMaxMinutes": 30
+  },
+  "roles": {
+    "orchestrator": {
+      "main": true,
+      "body": "personas/orchestrator.md",
+      "description": "Fixture lead on the main thread: delegates to wf:planner-t2 and the rest.",
+      "color": "purple",
+      "model": "claude-opus-5-5",
+      "effort": "medium"
+    },
+    "planner": {
+      "body": "personas/planner.md",
+      "description": "Fixture planner. Delegated by wf:orchestrator only.",
+      "tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "color": "blue",
+      "cacheTtl": "1h",
+      "tiers": {
+        "t1": {
+          "model": "claude-haiku-5-5",
+          "effort": "high"
+        },
+        "t2": {
+          "model": "claude-sonnet-5-5",
+          "effort": "high"
+        },
+        "t3": {
+          "model": "claude-opus-5-5",
+          "effort": "high"
+        }
+      }
+    },
+    "docs": {
+      "body": "personas/docs.md",
+      "description": "Fixture docs. Delegated by wf:orchestrator only.",
+      "tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "Edit"
+      ],
+      "color": "pink",
+      "cacheTtl": "5m",
+      "tiers": {
+        "t1": {
+          "model": "claude-haiku-5-5",
+          "effort": "medium"
+        },
+        "t2": {
+          "model": "claude-haiku-5-5",
+          "effort": "medium"
+        },
+        "t3": {
+          "model": "claude-sonnet-5-5",
+          "effort": "medium"
+        }
+      }
+    },
+    "coder": {
+      "body": "personas/coder.md",
+      "description": "Fixture coder. Delegated by wf:orchestrator only.",
+      "tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "color": "green",
+      "cacheTtl": "1h",
+      "tiers": {
+        "t1": {
+          "model": "claude-haiku-5-5",
+          "effort": "medium"
+        },
+        "t2": {
+          "model": "claude-sonnet-5-5",
+          "effort": "medium"
+        },
+        "t3": {
+          "model": "claude-sonnet-5-5",
+          "effort": "high"
+        }
+      }
+    },
+    "tester": {
+      "body": "personas/tester.md",
+      "description": "Fixture tester. Delegated by wf:orchestrator only.",
+      "tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "color": "yellow",
+      "cacheTtl": "5m",
+      "tiers": {
+        "t1": {
+          "model": "claude-haiku-5-5",
+          "effort": "medium"
+        },
+        "t2": {
+          "model": "claude-sonnet-5-5",
+          "effort": "medium"
+        },
+        "t3": {
+          "model": "claude-sonnet-5-5",
+          "effort": "high"
+        }
+      }
+    },
+    "reviewer": {
+      "body": "personas/reviewer.md",
+      "description": "Fixture reviewer. Delegated by wf:orchestrator only.",
+      "tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "color": "red",
+      "cacheTtl": "5m",
+      "tiers": {
+        "t1": {
+          "model": "claude-sonnet-5-5",
+          "effort": "medium"
+        },
+        "t2": {
+          "model": "claude-sonnet-5-5",
+          "effort": "high"
+        },
+        "t3": {
+          "model": "claude-opus-5-5",
+          "effort": "high"
+        }
+      }
+    },
+    "debugger": {
+      "body": "personas/debugger.md",
+      "description": "Fixture debugger. Delegated by wf:orchestrator only.",
+      "tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "color": "orange",
+      "cacheTtl": "1h",
+      "tiers": {
+        "t1": {
+          "model": "claude-sonnet-5-5",
+          "effort": "high"
+        },
+        "t2": {
+          "model": "claude-opus-5-5",
+          "effort": "high"
+        },
+        "t3": {
+          "model": "claude-opus-5-5",
+          "effort": "high"
+        }
+      }
+    },
+    "git": {
+      "single": true,
+      "body": "personas/git.md",
+      "description": "Fixture git agent. Delegated by wf:orchestrator only.",
+      "color": "cyan",
+      "cacheTtl": "5m",
+      "model": "claude-sonnet-5-5",
+      "effort": "medium"
+    }
+  },
+  "blocks": {
+    "worker": "prompts/worker.md"
+  },
+  "rules": [
+    {
+      "source": "prompts/house-rules.md",
+      "target": "rules/wf-house-rules.md"
+    }
+  ],
+  "hookScripts": [
+    {
+      "source": "hooks/guard.mjs",
+      "target": "hooks/guard.mjs"
+    },
+    {
+      "source": "hooks/git.mjs",
+      "target": "hooks/git.mjs"
+    },
+    {
+      "source": "hooks/context.mjs",
+      "target": "hooks/context.mjs"
+    },
+    {
+      "source": "hooks/compact.mjs",
+      "target": "hooks/compact.mjs"
+    },
+    {
+      "source": "hooks/title.mjs",
+      "target": "hooks/title.mjs"
+    }
+  ],
+  "scripts": [
+    {
+      "source": "scripts/wf-agents.mjs",
+      "target": "scripts/wf-agents.mjs"
+    },
+    {
+      "source": "scripts/wf-clean.mjs",
+      "target": "scripts/wf-clean.mjs"
+    },
+    {
+      "source": "scripts/wf-keepwarm.mjs",
+      "target": "scripts/wf-keepwarm.mjs"
+    }
+  ],
+  "launcher": {
+    "name": "wf",
+    "agent": "wf:orchestrator",
+    "env": {
+      "BASH_DEFAULT_TIMEOUT_MS": "600000",
+      "BASH_MAX_TIMEOUT_MS": "600000",
+      "CLAUDE_CODE_THRIFTY_SONIC": "0",
+      "CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": "1",
+      "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "86.74"
+    }
+  },
+  "wfSettings": {
+    "outputStyle": "Concise",
+    "ultracode": false,
+    "permissions": {
+      "allow": ["mcp__wf__compact"],
+      "deny": [
+        "Agent(model:*)",
+        "Agent(effort:*)",
+        "Artifact",
+        "Workflow",
+        "ScheduleWakeup",
+        "SendFeedback",
+        "ReportFindings",
+        "ListAgents"
+      ]
+    }
+  }
+}

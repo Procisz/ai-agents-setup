@@ -1,0 +1,12 @@
+{
+  "name": "ai-agents-setup",
+  "private": true,
+  "description": "Installs and maintains a personal Claude Code workflow. No dependencies: this file only holds scripts.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "lint": "node wf.mjs lint --self"
+  }
+}

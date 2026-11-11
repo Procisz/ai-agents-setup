@@ -1,0 +1,1211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wf v2 guide</title>
+<meta name="description" content="A short visual guide to wf v2, the personal Claude Code workflow of ai-agents-setup: install and its choices, daily use, tiers, skills, context, cache and safety.">
+<script>
+try {
+  var savedTheme = localStorage.getItem("wf-guide-theme");
+  if (savedTheme === "light" || savedTheme === "dark") document.documentElement.setAttribute("data-theme", savedTheme);
+} catch (e) {}
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f5f9; --surface: #ffffff; --soft: #f5f6fa; --ink: #1d2230; --muted: #5e6475; --line: #e2e5ec;
+  --haiku: #1f6fc4; --haiku-bg: #e7f1fc; --haiku-ink: #0e4a8a; --haiku-line: #b7d3f3;
+  --sonnet: #0e8a6a; --sonnet-bg: #e2f6ef; --sonnet-ink: #075540; --sonnet-line: #a9e1cf;
+  --opus: #5b4bc4; --opus-bg: #eeebfd; --opus-ink: #3a2f8f; --opus-line: #cdc6f6;
+  --you: #d98a12; --you-bg: #fff3dc; --you-ink: #7a4a04; --you-line: #f3d39b;
+  --hook: #e0603a; --hook-bg: #fdebe5; --hook-ink: #8a2e12; --hook-line: #f4bfae;
+  --ok: #0e8a6a; --no: #c2412a;
+  --banner: #26306b; --banner-ink: #ffffff; --banner-sub: #dfe3ff; --banner-kicker: #b9c2ff;
+  --box: #1f2433; --box-ink: #f1f3fa; --box-edge: #1fbf8f; --box-line: #1f2433;
+  --copy-bg: #c9f0e2; --copy-ink: #075540; --done-bg: #fff3dc; --done-ink: #7a4a04;
+  --code-bg: #eef0f6; --row: #f8f9fc; --th: #26306b; --dash: #9aa0ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #11141c; --surface: #191d28; --soft: #1f2431; --ink: #e6e9f2; --muted: #a3a9b9; --line: #2d3344;
+    --haiku: #5ea4ec; --haiku-bg: #15253a; --haiku-ink: #a9cdf5; --haiku-line: #2a4a70;
+    --sonnet: #3cc49c; --sonnet-bg: #12302a; --sonnet-ink: #9fe3cd; --sonnet-line: #23584a;
+    --opus: #9b8cf0; --opus-bg: #241f45; --opus-ink: #cfc7fb; --opus-line: #43397f;
+    --you: #f0a93a; --you-bg: #33260f; --you-ink: #f6d39a; --you-line: #6a4c18;
+    --hook: #f08460; --hook-bg: #361c14; --hook-ink: #f7b9a3; --hook-line: #6e3423;
+    --ok: #3cc49c; --no: #f08460;
+    --banner: #1c2352; --banner-ink: #ffffff; --banner-sub: #cdd3ff; --banner-kicker: #a3adff;
+    --box: #0b0e15; --box-ink: #eef1f8; --box-edge: #2fd3a0; --box-line: #2d3344;
+    --copy-bg: #1d4a3d; --copy-ink: #b9f0dc; --done-bg: #4a3712; --done-ink: #f6d39a;
+    --code-bg: #262c3b; --row: #1d2230; --th: #2c356f; --dash: #687088;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #11141c; --surface: #191d28; --soft: #1f2431; --ink: #e6e9f2; --muted: #a3a9b9; --line: #2d3344;
+  --haiku: #5ea4ec; --haiku-bg: #15253a; --haiku-ink: #a9cdf5; --haiku-line: #2a4a70;
+  --sonnet: #3cc49c; --sonnet-bg: #12302a; --sonnet-ink: #9fe3cd; --sonnet-line: #23584a;
+  --opus: #9b8cf0; --opus-bg: #241f45; --opus-ink: #cfc7fb; --opus-line: #43397f;
+  --you: #f0a93a; --you-bg: #33260f; --you-ink: #f6d39a; --you-line: #6a4c18;
+  --hook: #f08460; --hook-bg: #361c14; --hook-ink: #f7b9a3; --hook-line: #6e3423;
+  --ok: #3cc49c; --no: #f08460;
+  --banner: #1c2352; --banner-ink: #ffffff; --banner-sub: #cdd3ff; --banner-kicker: #a3adff;
+  --box: #0b0e15; --box-ink: #eef1f8; --box-edge: #2fd3a0; --box-line: #2d3344;
+  --copy-bg: #1d4a3d; --copy-ink: #b9f0dc; --done-bg: #4a3712; --done-ink: #f6d39a;
+  --code-bg: #262c3b; --row: #1d2230; --th: #2c356f; --dash: #687088;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+a { color: var(--opus); }
+p { margin: 0 0 10px; }
+code, pre, .mono { font-family: ui-monospace, Menlo, "SF Mono", Consolas, monospace; }
+code { font-size: 0.88em; background: var(--code-bg); border-radius: 4px; padding: 1px 4px; overflow-wrap: anywhere; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 20px 48px; }
+header.top { background: var(--banner); color: var(--banner-ink); }
+header.top .wrap { padding-top: 28px; padding-bottom: 30px; position: relative; }
+.kicker { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--banner-kicker); font-weight: 600; }
+header.top h1 { font-size: 40px; line-height: 1.1; margin: 6px 0 8px; letter-spacing: -0.01em; }
+header.top .sub { font-size: 18px; color: var(--banner-sub); margin: 0; max-width: 640px; }
+#theme { position: absolute; top: 24px; right: 16px; font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1; color: var(--banner-ink); background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 20px; padding: 7px 12px; cursor: pointer; }
+.chain { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; align-items: center; }
+.chain span { font-size: 13px; font-weight: 700; color: #fff; border-radius: 8px; padding: 5px 10px; }
+.chain i { font-style: normal; color: var(--banner-kicker); }
+.c-you { background: #d98a12; } .c-opus { background: #5b4bc4; } .c-sonnet { background: #0e8a6a; } .c-haiku { background: #1f6fc4; } .c-hook { background: #e0603a; }
+nav.toc { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin: 22px 0 8px; }
+nav.toc h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 8px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px 18px; }
+nav.toc a { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px dotted var(--line); color: var(--ink); text-decoration: none; }
+nav.toc a:hover { color: var(--opus); }
+nav.toc .n { font-weight: 700; color: var(--opus); min-width: 22px; }
+section.topic { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 18px 14px; margin: 18px 0; scroll-margin-top: 12px; }
+section.topic h2 { font-size: 24px; line-height: 1.25; margin: 0 0 12px; display: flex; align-items: center; gap: 10px; }
+section.topic h2 .num { font-size: 14px; font-weight: 700; color: #fff; background: var(--opus); border-radius: 7px; padding: 3px 9px; }
+h3 { font-size: 18px; margin: 20px 0 8px; }
+.lead { font-size: 17px; }
+.muted { color: var(--muted); }
+.small { font-size: 14px; }
+.back { font-size: 13px; text-align: right; margin: 8px 0 0; }
+.back a { color: var(--muted); text-decoration: none; }
+.cmd { display: flex; align-items: center; gap: 10px; max-width: 100%; background: var(--box); color: var(--box-ink); border: 1px solid var(--box-line); border-left: 4px solid var(--box-edge); border-radius: 8px; padding: 8px 10px 8px 14px; margin: 8px 0 4px; }
+.cmd code { flex: 1 1 auto; min-width: 0; background: transparent; color: inherit; padding: 0; font-size: 14px; line-height: 1.5; white-space: pre; overflow-x: auto; overflow-wrap: normal; }
+.copybtn { flex: 0 0 auto; font: 600 12px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; color: var(--copy-ink); background: var(--copy-bg); border: 0; border-radius: 5px; padding: 6px 11px; cursor: pointer; user-select: none; -webkit-user-select: none; }
+.copybtn.done { color: var(--done-ink); background: var(--done-bg); }
+.exp { color: var(--muted); font-size: 14px; margin: 2px 0 12px; }
+.exp b { color: var(--ink); font-weight: 600; }
+pre.term { background: var(--box); color: var(--box-ink); border: 1px solid var(--box-line); border-radius: 8px; padding: 12px 14px; font-size: 13px; line-height: 1.55; overflow-x: auto; margin: 8px 0 12px; }
+pre.term.wrap { white-space: pre-wrap; overflow-wrap: anywhere; }
+pre.term .dim { color: #9aa3bd; }
+pre.term .hl { color: #7fe0bf; }
+pre.term .cy { color: #7fd3f0; }
+pre.term .yw { color: #f3c969; }
+pre.term b { font-weight: 700; }
+ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 10px 0; }
+ol.steps > li { counter-increment: step; position: relative; padding: 0 0 6px 40px; margin: 0 0 10px; }
+ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--you); color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+ol.steps > li > .h { font-weight: 700; display: block; margin: 2px 0 4px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 10px 0 12px; }
+.card { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--soft); min-width: 0; }
+.card .h { font-weight: 700; display: block; margin-bottom: 4px; }
+.card p { margin: 0; font-size: 15px; color: var(--muted); }
+.card.opus { background: var(--opus-bg); border-color: var(--opus-line); } .card.opus .h { color: var(--opus-ink); }
+.card.sonnet { background: var(--sonnet-bg); border-color: var(--sonnet-line); } .card.sonnet .h { color: var(--sonnet-ink); }
+.card.haiku { background: var(--haiku-bg); border-color: var(--haiku-line); } .card.haiku .h { color: var(--haiku-ink); }
+.card.you { background: var(--you-bg); border-color: var(--you-line); } .card.you .h { color: var(--you-ink); }
+.card.hook { background: var(--hook-bg); border-color: var(--hook-line); } .card.hook .h { color: var(--hook-ink); }
+.callout { border-radius: 12px; padding: 11px 14px; margin: 12px 0; font-size: 15px; }
+.callout b { display: block; margin-bottom: 2px; }
+.callout.info { background: var(--haiku-bg); border: 1px solid var(--haiku-line); color: var(--haiku-ink); }
+.callout.warn { background: var(--you-bg); border: 1px solid var(--you-line); color: var(--you-ink); }
+.callout.guard { background: var(--hook-bg); border: 1px solid var(--hook-line); color: var(--hook-ink); }
+.callout code { background: rgba(127, 127, 127, 0.18); }
+.tablewrap { overflow-x: auto; margin: 10px 0 14px; border-radius: 10px; border: 1px solid var(--line); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 520px; }
+th { text-align: left; color: #fff; background: var(--th); font-weight: 600; padding: 8px 10px; }
+td { padding: 8px 10px; vertical-align: top; border-top: 1px solid var(--line); }
+tbody tr:nth-child(even) td { background: var(--row); }
+table.tiers { min-width: 640px; }
+table.tiers th, table.tiers td { padding: 8px 8px; }
+table.tiers th:first-child, table.tiers td:first-child { position: sticky; left: 0; z-index: 1; padding-left: 12px; border-right: 1px solid var(--line); }
+table.tiers th:first-child { background: var(--th); }
+table.tiers td:first-child { background: var(--surface); }
+table.tiers tbody tr:nth-child(even) td:first-child { background: var(--row); }
+table.tiers .pill { font-size: 12px; padding: 2px 6px; }
+table.tiers th:not(:first-child), table.tiers td:not(:first-child) { text-align: center; vertical-align: middle; }
+td.k { font-weight: 600; white-space: nowrap; }
+.pill { display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--line); white-space: nowrap; margin: 1px 0; }
+.pill.opus { background: var(--opus-bg); color: var(--opus-ink); border-color: var(--opus-line); }
+.pill.sonnet { background: var(--sonnet-bg); color: var(--sonnet-ink); border-color: var(--sonnet-line); }
+.pill.haiku { background: var(--haiku-bg); color: var(--haiku-ink); border-color: var(--haiku-line); }
+.pill.you { background: var(--you-bg); color: var(--you-ink); border-color: var(--you-line); }
+.pill.hook { background: var(--hook-bg); color: var(--hook-ink); border-color: var(--hook-line); }
+.pill.plain { background: var(--soft); color: var(--ink); }
+.yes { color: var(--ok); font-weight: 700; }
+.no { color: var(--no); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; color: var(--muted); margin: 6px 0 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.flow { list-style: none; margin: 12px 0; padding: 0; position: relative; }
+.flow::before { content: ""; position: absolute; left: 15px; top: 14px; bottom: 14px; width: 3px; background: var(--line); border-radius: 2px; }
+.flow li { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; margin: 0 0 10px; }
+.flow .dot { width: 32px; height: 32px; border-radius: 50%; color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+.flow .box { border-radius: 10px; border: 1px solid var(--line); background: var(--soft); padding: 8px 12px; min-width: 0; }
+.flow .box .h { font-weight: 700; }
+.flow .box .when { font-size: 14px; color: var(--muted); }
+.flow .box .who { float: right; margin-left: 8px; }
+.flow li.cond .box { border: 1.5px dashed var(--dash); }
+.flow .gate { background: var(--you-bg); border-color: var(--you-line); }
+.flow .gate .h { color: var(--you-ink); }
+.d-you { background: var(--you); } .d-opus { background: var(--opus); } .d-sonnet { background: var(--sonnet); } .d-haiku { background: var(--haiku); } .d-hook { background: var(--hook); } .d-mix { background: linear-gradient(135deg, var(--haiku) 50%, var(--sonnet) 50%); } .d-so { background: linear-gradient(135deg, var(--sonnet) 50%, var(--opus) 50%); } .d-tri { background: linear-gradient(135deg, var(--haiku) 34%, var(--sonnet) 34%, var(--sonnet) 66%, var(--opus) 66%); }
+.summary { border: 1px solid var(--line); border-radius: 12px; background: var(--soft); padding: 14px 16px; font-size: 15px; }
+.summary .h { font-weight: 700; display: block; margin-top: 8px; }
+.summary .h:first-child { margin-top: 0; }
+.summary ul { margin: 2px 0 0; padding-left: 20px; }
+.ask { margin: 12px 0; border: 1px solid var(--you-line); background: var(--you-bg); border-radius: 12px; padding: 12px 14px; }
+.ask .q { font-weight: 700; color: var(--you-ink); margin-bottom: 8px; }
+.ask .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.ask .opt { border-radius: 8px; padding: 7px 12px; font-size: 14px; border: 1px solid var(--you-line); background: var(--surface); }
+.ask .opt b { display: block; }
+.ask .opt span { color: var(--muted); font-size: 13px; }
+.ask .opt.main { border-color: var(--you); box-shadow: inset 0 0 0 1px var(--you); }
+.zones { margin: 20px 0 6px; }
+.zbar { display: flex; height: 34px; border-radius: 8px; position: relative; font-size: 13px; font-weight: 700; color: #fff; }
+.zbar div { display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 4px; line-height: 1.1; }
+.z1 { width: 50%; background: var(--sonnet); border-radius: 8px 0 0 8px; } .z2 { width: 30%; background: var(--you); } .z3 { width: 20%; background: var(--hook); border-radius: 0 8px 8px 0; }
+.zmark { position: absolute; top: -9px; height: 13px; left: 85%; width: 3px; background: var(--ink); border-radius: 2px; }
+.zaxis { position: relative; height: 40px; font-size: 13px; color: var(--muted); }
+.zaxis span { position: absolute; top: 4px; transform: translateX(-50%); white-space: nowrap; }
+.zaxis span:first-child { transform: none; }
+.zaxis span:last-child { transform: translateX(-100%); }
+.zaxis .c { top: 20px; color: var(--ink); font-weight: 600; transform: translateX(calc(-100% + 3px)); }
+.timeline { position: relative; margin: 26px 0 8px; height: 82px; }
+.timeline .line { position: absolute; left: 0; right: 0; top: 22px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--sonnet) 0%, var(--sonnet) 96.6%, var(--hook) 96.6%); }
+.timeline .tick { position: absolute; top: 12px; width: 3px; height: 26px; background: var(--ink); border-radius: 2px; }
+.timeline .lab { position: absolute; top: 44px; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.timeline .lab b { color: var(--ink); display: block; }
+footer { color: var(--muted); font-size: 13px; text-align: center; padding: 8px 16px 30px; }
+@media (max-width: 600px) {
+  header.top h1 { font-size: 32px; }
+  header.top .sub { font-size: 16px; }
+  header.top .wrap { padding-top: 64px; }
+  section.topic { padding: 16px 14px 10px; }
+  section.topic h2 { font-size: 21px; }
+  .flow .box .who { float: none; display: inline-block; margin: 0 0 4px; }
+  .cmd code { font-size: 13px; }
+}
+.layout { max-width: 1320px; margin: 0 auto; padding: 0 24px 24px; }
+.content { min-width: 0; }
+.sidenav, .mobilenav { display: none; }
+.sidenav .side-title, .mobilemenu .side-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; margin: 0 0 8px 12px; }
+.sidenav ol, .mobilemenu ol { list-style: none; margin: 0; padding: 0; }
+.sidenav ul.sub, .mobilemenu ul.sub { list-style: none; margin: 0 0 4px; padding: 0; display: none; }
+.sidenav li.open > ul.sub { display: block; }
+.navlink { display: flex; gap: 10px; align-items: baseline; padding: 6px 10px 6px 12px; border-left: 3px solid transparent; border-radius: 0 8px 8px 0; color: var(--muted); text-decoration: none; font-size: 14px; line-height: 1.35; }
+.navlink:hover { color: var(--ink); background: var(--soft); }
+.navlink .n { color: var(--opus); font-weight: 700; min-width: 20px; }
+ul.sub .navlink { padding-left: 42px; font-size: 13px; }
+.navlink.active { color: var(--ink); background: var(--opus-bg); border-left-color: var(--opus); font-weight: 600; }
+.navlink.within { color: var(--ink); font-weight: 600; }
+.side-foot { margin: 14px 0 0 12px; font-size: 13px; }
+.side-foot a { color: var(--muted); }
+@media (min-width: 1000px) {
+  html.has-sidenav .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 32px; align-items: start; }
+  html.has-sidenav .sidenav { display: block; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; margin-top: 22px; padding: 14px 6px 14px 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+  html.has-sidenav nav.toc, html.has-sidenav .back { display: none; }
+}
+@media (max-width: 999px) {
+  html.has-sidenav .mobilenav { display: block; position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
+  html.has-sidenav section.topic, html.has-sidenav h3[id] { scroll-margin-top: 64px; }
+}
+.mobilebar { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1320px; margin: 0 auto; padding: 10px 20px; font: 600 15px/1.3 inherit; font-family: inherit; color: var(--ink); background: transparent; border: 0; cursor: pointer; text-align: left; }
+.mobilebar .where { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mobilebar .where .n { color: var(--opus); margin-right: 8px; }
+.mobilebar .chev { color: var(--muted); font-size: 13px; }
+.mobilemenu { max-width: 1320px; margin: 0 auto; padding: 4px 12px 12px; max-height: 70vh; overflow-y: auto; }
+.mobilemenu ul.sub { display: block; }
+.wrap, .layout { padding-left: 24px; padding-right: 24px; }
+header.top .wrap { padding-top: 32px; padding-bottom: 32px; }
+#theme { top: 32px; right: 24px; }
+.chain { margin-top: 16px; gap: 8px; }
+.content { padding-top: 24px; }
+.content > nav.toc, .content > .callout, .content > section.topic { margin: 0 0 24px; padding: 24px; border-radius: 14px; }
+section.topic h2 { margin: 0 0 16px; }
+section.topic > :last-child, .card > :last-child, .callout > :last-child, .summary > :last-child, .ask > :last-child { margin-bottom: 0; }
+h3 { margin: 24px 0 12px; }
+p { margin: 0 0 12px; }
+.grid { gap: 16px; margin: 16px 0; }
+.card { padding: 16px; }
+section.topic .callout { margin: 16px 0; padding: 16px; }
+.summary, .ask { padding: 16px; margin: 16px 0; }
+.ask .opts { gap: 12px; }
+.tablewrap { margin: 16px 0; }
+th, td { padding: 16px; }
+.cmd { margin: 12px 0 4px; }
+.exp { margin: 4px 0 16px; }
+pre.term { padding: 16px; margin: 12px 0 16px; }
+ol.steps { margin: 16px 0; }
+ol.steps > li { margin: 0 0 16px; padding: 0 0 0 44px; }
+.flow { margin: 16px 0; }
+.flow li { gap: 12px; margin: 0 0 12px; }
+.flow .box { padding: 16px; }
+.legend { margin: 8px 0 16px; }
+.back { margin: 16px 0 0; }
+footer { padding: 0 24px 32px; }
+.sidenav .side-title { margin: 0 0 12px 24px; }
+.sidenav .navlink { padding: 6px 12px 6px 21px; }
+.sidenav ul.sub .navlink { padding-left: 51px; }
+.mobilebar { padding: 12px 24px; }
+.mobilemenu { padding: 4px 24px 16px; }
+@media (min-width: 1000px) {
+  html.has-sidenav .layout { gap: 24px; }
+  html.has-sidenav .sidenav { top: 24px; max-height: calc(100vh - 48px); margin-top: 24px; padding: 24px 12px 24px 0; }
+}
+@media (max-width: 600px) {
+  .wrap, .layout { padding-left: 16px; padding-right: 16px; }
+  header.top .wrap { padding-top: 64px; padding-bottom: 24px; }
+  #theme { top: 16px; right: 16px; }
+  .content { padding-top: 16px; }
+  .content > nav.toc, .content > .callout, .content > section.topic { margin: 0 0 16px; padding: 16px; }
+  .mobilebar { padding: 12px 16px; }
+  .mobilemenu { padding: 4px 16px 16px; }
+  footer { padding: 0 16px 24px; }
+}
+header.top .wrap.topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 16px; padding-bottom: 16px; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand .logo { font: 700 15px/1 ui-monospace, Menlo, "SF Mono", Consolas, monospace; color: #fff; background: var(--opus); border-radius: 8px; padding: 8px 10px; }
+.brand .name { font-size: 18px; font-weight: 700; white-space: nowrap; }
+.brand .tag { font-size: 14px; color: var(--banner-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+header.top #theme { position: static; flex: 0 0 auto; }
+@media (max-width: 600px) {
+  header.top .wrap.topbar { padding-top: 12px; padding-bottom: 12px; }
+  .brand .tag { display: none; }
+}
+@media print {
+  #theme, .copybtn, .back, .sidenav, .mobilenav { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap topbar">
+    <div class="brand"><span class="logo">wf</span><span class="name">wf v2 guide</span><span class="tag">A personal Claude Code workflow</span></div>
+    <button id="theme" type="button" aria-label="Switch between light and dark mode">Dark mode</button>
+  </div>
+</header>
+
+<div class="mobilenav" id="mobilenav">
+  <button class="mobilebar" id="mobilebar" type="button" aria-expanded="false" aria-controls="mobilemenu"><span class="where">Contents</span><span class="chev" aria-hidden="true">&#9662;</span></button>
+  <div class="mobilemenu" id="mobilemenu" hidden><ol></ol></div>
+</div>
+
+<div class="layout">
+<aside class="sidenav" id="sidenav" aria-label="Guide sections">
+  <div class="side-title">Contents</div>
+  <ol></ol>
+</aside>
+<main class="content">
+
+<nav class="toc" id="contents" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#overview"><span class="n">1</span>Overview</a></li>
+    <li><a href="#install"><span class="n">2</span>Install</a></li>
+    <li><a href="#first-run"><span class="n">3</span>First run</a></li>
+    <li><a href="#flow"><span class="n">4</span>The flow</a></li>
+    <li><a href="#approval"><span class="n">5</span>The approval</a></li>
+    <li><a href="#tiers"><span class="n">6</span>Tiers and models</a></li>
+    <li><a href="#skills"><span class="n">7</span>Skills and adding one</a></li>
+    <li><a href="#context"><span class="n">8</span>Context and cache</a></li>
+    <li><a href="#safety"><span class="n">9</span>Safety</a></li>
+    <li><a href="#commands"><span class="n">10</span>Commands</a></li>
+    <li><a href="#trouble"><span class="n">11</span>Troubleshooting</a></li>
+    <li><a href="#uninstall"><span class="n">12</span>Uninstall</a></li>
+  </ol>
+</nav>
+
+<section class="topic" id="overview">
+  <h2><span class="num">1</span>Overview</h2>
+  <p class="lead">wf turns Claude Code into a small team of AI assistants. You say what you want in plain words, the team does the work, and you get a short report of what was done.</p>
+
+  <h3 id="overview-how">How it works</h3>
+  <ol class="steps">
+    <li><span class="h">You ask</span>Open wf in your project and describe what you want, the way you would ask a colleague.</li>
+    <li><span class="h">It checks that it understood you</span>If something is unclear, it asks short questions, each with answers you can simply pick, and every time it shows what is already decided, what is still open and which decision it needs from you now. It keeps asking back until nothing is open. Then it shows a short summary of what it is going to do, in plain words, and shows it again after every change until you approve or cancel. Until then it changes nothing.</li>
+    <li><span class="h">You approve once</span>Nothing starts until you approve that summary. After that it works on its own and does not interrupt you, unless something makes the approved summary impossible to follow.</li>
+    <li><span class="h">The team does the work</span>One assistant plans the steps, others make the changes and test them, and specialists step in when they are needed.</li>
+    <li><span class="h">You get a short report</span>What was done, what was checked, and anything that still needs your attention. Its temporary notes are cleaned up.</li>
+  </ol>
+
+  <h3 id="overview-team">Who is on the team</h3>
+  <div class="grid">
+    <div class="card you"><span class="h">The orchestrator</span><p>The project manager: talks with you, hands out the work, keeps track of it and writes the report. Beyond a quick answer or a one-line fix, it does not do the work itself.</p></div>
+    <div class="card"><span class="h">The planner</span><p>Works out the steps before anyone starts, for every task, small or large.</p></div>
+    <div class="card"><span class="h">The coder</span><p>Makes the changes. Several can work side by side on separate parts.</p></div>
+    <div class="card"><span class="h">The tester</span><p>Checks that everything still works.</p></div>
+    <div class="card"><span class="h">The docs writer</span><p>Updates the project's written documentation.</p></div>
+    <div class="card"><span class="h">The reviewer</span><p>A second pair of eyes, when you ask for one.</p></div>
+    <div class="card"><span class="h">The debugger</span><p>The troubleshooter, called in when the same problem comes back.</p></div>
+    <div class="card"><span class="h">The git assistant</span><p>Saves and shares the finished work, only when you asked for it.</p></div>
+  </div>
+
+  <h3 id="overview-why">Why it works this way</h3>
+  <div class="grid">
+    <div class="card"><span class="h">Quick and economical</span><p>Easy jobs go to small, fast AI models; hard or risky jobs go to the strongest ones. How hard a job is counts, not how many files it touches.</p></div>
+    <div class="card"><span class="h">Few interruptions</span><p>One approval, then it works alone. The choices it made on its own are listed in the report.</p></div>
+    <div class="card"><span class="h">Safe by default</span><p>It never publishes your work unless you asked, never straight onto the main version (it opens a proposal that can be reviewed first), and it backs up your settings before it installs anything.</p></div>
+  </div>
+
+  <div class="callout info"><b>The rest of this guide is technical</b>From here on: installing, commands, settings and the details of how wf works.</div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<div class="callout info"><b>Copying commands</b>Every dark box with a green edge holds one command: click its Copy button. Every <code>node wf.mjs</code> command runs from your clone folder, wherever you cloned it.</div>
+
+<section class="topic" id="install">
+  <h2><span class="num">2</span>Install</h2>
+  <div class="grid">
+    <div class="card"><span class="h">Node 22 or newer</span><p>Check with <code>node --version</code>. On macOS: <code>brew install node</code>.</p></div>
+    <div class="card"><span class="h">Claude Code 2.1.312+</span><p>From the native installer, on macOS and Linux <code>curl -fsSL https://claude.ai/install.sh | bash</code> (Windows: <a href="#trouble">see 11</a>). Check with <code>claude --version</code>; older: <code>claude update</code>.</p></div>
+    <div class="card"><span class="h">git and gh</span><p>The repository is private: the GitHub CLI signs you in and clones it. In your projects the git agent needs git, and a pull request needs <code>gh</code> signed in.</p></div>
+  </div>
+  <ol class="steps">
+    <li><span class="h">Sign in to GitHub</span>
+      <div class="cmd"><code>gh auth login</code></div>
+      <div class="exp">Answer GitHub.com, HTTPS, yes, web browser. Then <b>Logged in as</b> your account.</div>
+    </li>
+    <li><span class="h">Clone, in any folder where you keep projects</span>
+      <div class="cmd"><code>gh repo clone Procisz/ai-agents-setup</code></div>
+      <div class="cmd"><code>cd ai-agents-setup</code></div>
+      <div class="exp">This is your clone folder. It can be anywhere; every later <code>node wf.mjs</code> step runs here.</div>
+    </li>
+    <li><span class="h">Check that you are in the clone folder</span>
+      <div class="cmd"><code>ls wf.mjs</code></div>
+      <div class="exp">Expected: <b>wf.mjs</b>. "No such file" means another folder: <code>cd</code> to your clone first.</div>
+    </li>
+    <li><span class="h">Install</span>
+      <div class="cmd"><code>node wf.mjs install</code></div>
+      <div class="exp">A header box, your config and launcher folders, <b>✔ Claude Code 2.1.312</b> and <b>✔ Lint: 0 errors, 0 warnings</b>, then <a href="#install-steps">five steps</a>: tiers, agents, models, skills and a summary. For everything with the recommended skills, press enter on every list and once more on <b>Install</b> (twelve presses the first time: tiers, agents, models, a skills list for each of the eight roles, then Install). It ends with <b>✔ Applied 103 changes. Backup: &lt;stamp&gt;</b> (103 on a fresh macOS or Linux install with everything ticked, 107 on Windows), <b>✔ verify: claude plugin validate passed</b>, <b>✔ verify: 103 files match.</b> and <b>Next: run wf in a project folder.</b> A node from nvm or another version manager adds a <b>⚠ The hooks will run ...</b> warning (see <a href="#trouble">11</a>).</div>
+    </li>
+    <li><span class="h">Only if install printed a PATH hint</span>
+      <p class="small">It looks like <code>... is not on PATH. Add it: echo '...' &gt;&gt; ~/.zshrc, then open a new terminal.</code> Run the <code>echo ... &gt;&gt; ~/.zshrc</code> command from it (from <code>echo</code> up to the file name), open a new terminal, then:</p>
+      <div class="cmd"><code>command -v wf</code></div>
+      <div class="exp">A path ending in <b>.local/bin/wf</b>.</div>
+    </li>
+    <li><span class="h">Health check, from the clone folder</span>
+      <div class="cmd"><code>node wf.mjs doctor</code></div>
+      <div class="exp">Last line <b>wf doctor: all good.</b>, or <b>all good (1 warning).</b> with the <code>warn</code> line above it.</div>
+    </li>
+  </ol>
+
+  <h3 id="install-steps">The five install steps</h3>
+  <p>Each step starts with <b>Step n of 5</b>, an icon and a title, then two to four lines on what you decide: what the step controls, what unticking does and what the default is. Every list starts from your saved answer of the last install, or the first time from the defaults: every tier, agent and model ticked, and each role's recommended skills. After enter the list makes way for one result line, such as <code>✔ Tiers: T1, T2, T3, T4 (T5 runs as T4)</code>.</p>
+  <ol class="steps">
+    <li><span class="h">📊 Tiers</span>
+      <p class="small">Which task sizes get their own agents: T1 small, T2 medium, T3 large, T4 major, T5 critical (how a task gets its tier: <a href="#tier-rubric">6</a>). T0, questions and tiny edits, needs no agents and is always there. <b>Default:</b> all five. Keep at least one: a task of a missing tier runs as the nearest installed tier, the higher one on a tie.</p>
+    </li>
+    <li><span class="h">🤖 Agents</span>
+      <p class="small">Which workers are installed: planner, docs, coder, tester, reviewer, debugger and git. Each role has one agent per installed tier, except git: one <code>wf:git</code> for every tier. Only the roles your tiers use are listed; the orchestrator is the main thread and always installed. <b>Default:</b> all of them. The coder is locked, needed by every tier; the work of a missing agent moves to a coder (<a href="#fallbacks">see below</a>). Without the debugger, a repeated failure gets one more coder round, then the report. Without the git agent, the work stays uncommitted and the report lists the git commands.</p>
+    </li>
+    <li><span class="h">🧠 Models</span>
+      <p class="small">Which models wf may use: Opus 5.5, Sonnet 5.5 and Haiku 5.5, strongest first, each with how many installed agents are set to it. <b>Default:</b> all three. Keep at least one: an agent whose model is unticked, the orchestrator too, runs on the nearest ticked model, the stronger one on a tie, with the same effort.</p>
+    </li>
+    <li><span class="h">🧩 Skills</span>
+      <p class="small">One list per installed role, the orchestrator first: the ticked skills are built into that agent's prompt. <b>Default:</b> each role's recommended skills; required ones are locked. An unticked skill stays in the library, where agents read it when a task needs it.</p>
+    </li>
+    <li><span class="h">📋 Summary</span>
+      <p class="small">A table of every agent with its tier, model and effort (<code>*</code> marks a stand-in model), one line per missing tier or agent and per unticked model that an installed agent was set to, with what happens instead, the skill counts and the file plan, with the v1 migration block if there is one. Then one last question.</p>
+    </li>
+  </ol>
+  <p>A list while you answer, here with T5 unticked. Under the cursor a line says what unticking that item does:</p>
+<pre class="term"><span class="cy">?</span> <b>Which tiers should wf install?</b>
+  <span class="hl">◉</span> T1  <span class="dim">mechanical or fully specified, low risk</span>
+  <span class="hl">◉</span> T2  <span class="dim">new behavior or open choices in one area</span>
+  <span class="hl">◉</span> T3  <span class="dim">cross-cutting, public interfaces or new ground</span>
+  <span class="hl">◉</span> T4  <span class="dim">risky changes across modules or stored formats</span>
+<span class="cy">❯</span> <span class="dim">◯</span> T5  <span class="dim">risky domains, irreversible changes or extra care</span>
+  <span class="cy">↳ T5 is skipped: a T5-sized task runs as T4</span>
+<span class="dim">  ↑/↓ move · space toggle · a all · enter confirm · esc cancel</span></pre>
+  <p>In the agents list, the git agent at the cursor:</p>
+<pre class="term"><span class="cy">?</span> <b>Which agents should wf install?</b>
+  <span class="hl">◉</span> planner   <span class="dim">writes the execution plan of every task</span>
+  <span class="hl">◉</span> docs      <span class="dim">updates the project docs a task affects</span>
+  <span class="dim">◉ coder     needed by every tier</span>
+  <span class="hl">◉</span> tester    <span class="dim">writes and runs the tests after the code</span>
+  <span class="hl">◉</span> reviewer  <span class="dim">reviews the change when the user asks for a review</span>
+  <span class="hl">◉</span> debugger  <span class="dim">fixes a failure that came back for the same reason</span>
+<span class="cy">❯</span> <span class="hl">◉</span> git       <span class="dim">branches, commits, pushes and opens pull requests when the sum…</span>
+  <span class="cy">↳ Untick the git agent: the work stays uncommitted and the report lists the
+    git commands</span>
+<span class="dim">  ↑/↓ move · space toggle · a all · enter confirm · esc cancel</span></pre>
+  <p class="small muted">Esc in any list cancels the whole install: <code>Cancelled: nothing was written.</code> Locked items are dimmed, with the reason (<code>required</code>, <code>needed by every tier</code>). The tier and model lists need at least one tick: enter with none shows <code>pick at least 1</code> and waits. A list taller than the terminal shows the part around the cursor, with <code>↑ n more above</code> and <code>↓ n more below</code> lines, and scrolls as you move; a narrow terminal gets a shorter key line.</p>
+  <div class="ask" role="group" aria-label="The last install question">
+    <div class="q">Install now?</div>
+    <div class="opts">
+      <div class="opt main"><b>Install</b><span>Write the files now; a backup comes first</span></div>
+      <div class="opt"><b>Change choices</b><span>Start again at step 1 with these answers ticked</span></div>
+      <div class="opt"><b>Cancel</b><span>Stop here; nothing is written</span></div>
+    </div>
+  </div>
+  <p class="small">Install is the only confirmation: no <code>Apply N changes?</code> question follows. Only enter chooses: space does nothing here but show <code>press enter to choose</code>. Cancel, or esc, ends with <code>Cancelled: nothing was written.</code></p>
+  <p class="small muted">The box, the icons and the colors appear only in a terminal: cyan for the cursor and titles, green for ticks, yellow for warnings, dim for hints and locked items. <code>NO_COLOR</code> turns the colors off. <code>FORCE_COLOR</code> forces the colors, also in a pipe, but never the box, the icons or the wrapping. In a Windows console outside Windows Terminal the icons fall back to ASCII (<code>[x]</code>, <code>[ ]</code>, <code>&gt;</code>, <code>+</code>, <code>!</code>). With <code>TERM=dumb</code> they fall back to ASCII too, and the lists become numbered questions: type the numbers to toggle, then press enter to accept. Without a terminal the output is plain text with no box, icons or wrapping, and no colors unless <code>FORCE_COLOR</code> is set.</p>
+
+  <h3 id="sample-run">A sample run</h3>
+  <p>Shortened (<code>...</code> marks cut lines): a first install with T5, the reviewer and Opus 5.5 unticked, as an 80 column terminal looks after Install.</p>
+<pre class="term"><span class="cy">  ╭───────────────────────────────────────────────────────────────────────╮
+  │                                                                       │
+  │</span>  <span class="cy"><b>wf 2.1.0 · installer</b></span>                                                 <span class="cy">│
+  │</span>  Sets up wf for Claude Code: agents, skills, hooks and the launcher.  <span class="cy">│
+  │                                                                       │
+  ╰───────────────────────────────────────────────────────────────────────╯</span>
+
+  <span class="dim">Config  </span>  /Users/you/.claude
+  <span class="dim">Launcher</span>  /Users/you/.local/bin
+
+  <span class="hl">✔</span> Claude Code 2.1.312
+  <span class="hl">✔</span> Lint: 0 errors, 0 warnings
+
+  <span class="dim">Step 1 of 5</span>  📊 <span class="cy"><b>Tiers</b></span>
+  A tier is a task size: T1 small, T2 medium, T3 large, T4 major and T5 critical.
+  Untick one and its tasks run as the nearest tier left, the higher on a tie.
+  Default: all of them. T0, questions and tiny edits, needs no agents.
+
+  <span class="hl">✔</span> Tiers: T1, T2, T3, T4 (T5 runs as T4)
+
+  <span class="dim">Step 2 of 5</span>  🤖 <span class="cy"><b>Agents</b></span>
+  ...
+  <span class="hl">✔</span> Agents: planner, docs, coder, tester, debugger, git (without reviewer)
+
+  <span class="dim">Step 3 of 5</span>  🧠 <span class="cy"><b>Models</b></span>
+  ...
+  <span class="hl">✔</span> Models: Sonnet 5.5, Haiku 5.5 (1 agent on a stand-in)
+
+  <span class="dim">Step 4 of 5</span>  🧩 <span class="cy"><b>Skills</b></span>
+  ...
+  <span class="hl">✔</span> orchestrator: 5 skills
+  ...
+  <span class="hl">✔</span> git: 2 skills
+
+  <span class="dim">Step 5 of 5</span>  📋 <span class="cy"><b>Summary</b></span>
+  Check the setup below. Nothing is written until you choose Install,
+  and every file it changes is backed up first.
+
+    <b>Role          Tier  Agent            Model        Effort</b>
+    orchestrator  main  wf:orchestrator  Sonnet 5.5   medium
+    planner       T1    wf:planner-t1    Haiku 5.5    medium
+                  T2    wf:planner-t2    Sonnet 5.5   low
+                  T3    wf:planner-t3    Sonnet 5.5   medium
+                  T4    wf:planner-t4    Sonnet 5.5   high
+    docs          T1    wf:docs-t1       Haiku 5.5    low
+                  T2    wf:docs-t2       Haiku 5.5    medium
+                  T3    wf:docs-t3       Haiku 5.5    high
+                  T4    wf:docs-t4       Sonnet 5.5   low
+    ...
+    debugger      T1    wf:debugger-t1   Sonnet 5.5   low
+                  T2    wf:debugger-t2   Sonnet 5.5   medium
+                  T3    wf:debugger-t3   Sonnet 5.5   high
+                  T4    wf:debugger-t4   Sonnet 5.5<span class="yw">*</span>  medium
+    git           all   wf:git           Haiku 5.5    medium
+    <span class="yw">*</span><span class="dim"> runs on a stand-in: its set model is not installed</span>
+
+  <span class="yw">⚠</span> T5 not installed: a T5-sized task runs as T4
+  <span class="yw">⚠</span> reviewer not installed: a coder of the tier reviews in a separate read-only
+    round when asked
+  <span class="yw">⚠</span> Opus 5.5 not installed: debugger-t4 runs on Sonnet 5.5
+  <span class="cy">ℹ</span> Skills: orchestrator 5 · planner 3 · docs 2 · coder 3 · tester 4 ·
+    debugger 4 · git 2
+
+  <b>Plan</b>  93 create · 0 update · 0 remove · 0 unchanged
+    <span class="hl">✚ create</span>  ai-agents-setup/plugin/.claude-plugin/plugin.json
+    <span class="hl">✚ create</span>  ai-agents-setup/plugin/agents/ (22 files)
+    ...
+
+  <span class="hl">✔</span> Summary: Install
+
+  <span class="hl">✔</span> Applied 93 changes. Backup: 20261028T162415Z (node wf.mjs restore puts it
+    back).
+  <span class="hl">✔</span> verify: claude plugin validate passed
+  <span class="hl">✔</span> verify: 93 files match.
+
+  <span class="cy"><b>Next:</b></span> run wf in a project folder.</pre>
+
+  <h3 id="saved-answers">Saved answers, --yes and --reset</h3>
+  <p>The install manifest saves all four answers: tiers, agents, models and skills. The next install starts every list from them, and anything added to wf since comes with its default: the git agent, for example, comes ticked on the first install that knows it, while a git agent you unticked once stays unticked. <code>diff</code>, <code>doctor</code> (its <code>choices</code> line) and every reinstall use them too, so a smaller setup survives updates.</p>
+  <div class="cmd"><code>node wf.mjs install --yes</code></div>
+  <div class="exp">Asks nothing, like a run without a terminal: installs the saved answers, or everything with the recommended skills the first time.</div>
+  <div class="cmd"><code>node wf.mjs install --reset</code></div>
+  <div class="exp">Starts from the defaults instead of the saved answers: in a terminal every list starts as the first time, and together with <code>--yes</code> it installs everything with the recommended skills. <code>--skills-reset</code> is its old name and still works.</div>
+
+  <h3 id="fallbacks">What a missing tier, agent or model means</h3>
+  <p>The orchestrator's instructions get one note per tier or agent you left out and one per unticked model that an installed agent was set to (<b>Everything is installed.</b> when there is none), and it follows them in every task.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Not installed</th><th>What happens instead</th></tr></thead>
+      <tbody>
+        <tr><td class="k">a tier</td><td>A task of that size runs as the nearest installed tier, the higher one on a tie: a missing T3 runs as T4, or as T2 when T4 is missing too (T1 to T5). The summary's Tier line says so, and the final report repeats it on its Setup line.</td></tr>
+        <tr><td class="k">planner</td><td>A coder of the task's tier writes plan.md in a separate plan-only round before the implementation, at every tier.</td></tr>
+        <tr><td class="k">docs agent</td><td>Each coder does the docs steps of plan.md in its own package (<code>wf: docs: in the coders' packages</code>), following the docs-writing skill.</td></tr>
+        <tr><td class="k">tester</td><td>Each coder writes and runs the tests of its package after its code (<code>wf: tests: in the coders' packages</code>), following the testing skill: expected values come from the approved summary and plan, never from the code's own output.</td></tr>
+        <tr><td class="k">reviewer</td><td>When you ask for a review, a coder of the task's tier does a separate read-only review round with the checks and severity scale of the code-review skill; the summary's Review line and the report's Setup line say so.</td></tr>
+        <tr><td class="k">debugger</td><td>A failure that comes back for the same reason gets one more coder fix round, within the cap of 2 per phase; when it fails again, it goes to the report (<a href="#fix-rounds">see 4</a>).</td></tr>
+        <tr><td class="k">git</td><td>The git phase leaves the work uncommitted, also when you asked for git work: the summary's Git line says so and keeps every git action you asked for (a commit, or a push and pull request, a branch name or base, a merge, or any other action such as deleting branches), and the report lists the commands for exactly that to run yourself (<code>git switch -c &lt;branch&gt;</code>, <code>git add -- &lt;the task's files&gt;</code>, <code>git commit -m "&lt;subject&gt;"</code>, and for a push or pull request <code>git push -u origin &lt;branch&gt;</code> and <code>gh pr create --fill</code>, with <code>--base &lt;base&gt;</code> when you named a base, for a merge <code>gh pr merge --merge</code>, and for any other action the git or gh command that does it, for example <code>git branch -d &lt;branch&gt;</code> or <code>git push origin --delete &lt;branch&gt;</code>).</td></tr>
+        <tr><td class="k">a model</td><td>Its agents run on the nearest ticked model, the stronger one on a tie, with the same effort. The install summary marks them with <code>*</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="updating">Updating</h3>
+  <p>From the clone folder:</p>
+  <div class="cmd"><code>git pull</code></div>
+  <div class="cmd"><code>node wf.mjs install</code></div>
+  <div class="exp">In a terminal the five steps come back with your saved answers: enter on each list and Install keeps them. Nothing new: <b>0 changes: wf is up to date.</b> An update that brings a new role (the debugger and the git agent came this way) shows it ticked in the agents step; until you install again, doctor's <code>choices</code> line warns, for example <b>debugger is new: node wf.mjs install adds it</b>, or <b>debugger, git are new: node wf.mjs install adds them</b> on an install older than both (after <b>no saved choices;</b> on an install from before the installer choices). A new agent of a role you already have, such as <code>wf:planner-t1</code>, is added without a question.</div>
+
+  <div class="callout warn"><b>Coming from v1</b>Install finds the v1 manifest and migrates once, after backing everything up: it removes the v1 agents and hooks, replaces the launcher and house rules, puts back your own <code>agents/Explore.md</code> when it still matches, and removes only the v1 entries from <code>settings.json</code> (your own hooks and settings stay). The home folder trust and <code>ai-agents-setup/cost/</code> are left alone. <code>restore --to &lt;stamp&gt;</code> brings v1 back. Close any running v1 <code>wf</code> session first: it loses its v1 agents and hooks.</div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="first-run">
+  <h2><span class="num">3</span>First run</h2>
+  <p class="lead">Open a terminal in one of your projects (a git repository is best: without one there is no git phase) and start wf:</p>
+  <div class="cmd"><code>wf</code></div>
+  <div class="exp">Claude Code opens with the wf orchestrator as the main thread, in the Concise output style. Type or paste your request. On Windows, type <code>wf.cmd</code> in PowerShell and cmd: plain <code>wf</code> opens the firewall console there (see <a href="#trouble">11</a>).</div>
+  <div class="grid">
+    <div class="card you"><span class="h">Try a question first</span><p>"What do the test scripts of this project run?" A question is tier T0: a direct answer, no approval, no agents. It changes nothing; when it suggests changes, it asks which ones to prepare as a task (at most 2 suggestions, then <b>None for now</b> and <b>Something else</b>), and those go through a summary and your approval.</p></div>
+    <div class="card you"><span class="h">Then a change</span><p>"Add a --json option to the stats command." A new option is usually tier T2. While a point is open it asks back, with answers you can pick; then you get a short summary and the approval question, then status lines and a report.</p></div>
+  </div>
+  <p>You can also pass the request at once; any other arguments go to <code>claude</code> unchanged:</p>
+  <div class="cmd"><code>wf "what do the test scripts of this project run?"</code></div>
+  <div class="callout info"><b>Tips</b>Start with <code>T0:</code>, <code>T1:</code>, <code>T2:</code>, <code>T3:</code>, <code>T4:</code> or <code>T5:</code> to force a tier; a tier you did not install runs as the nearest installed one. Say "commit" for a commit on a feature branch, or "push" or "open a pull request" for branch, push and pull request; otherwise nothing is committed. Add "merge it" only when you want the merge too. You can ask for any other git action in plain words, such as "delete the merged branches" or "commit on main". Without the git agent installed nothing is committed even when you ask: the report lists the git commands to run yourself. Ask for a review to get the reviewer (or a coder's read-only review round when the reviewer is not installed). "approved, no questions" in the request approves in advance.</div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="flow">
+  <h2><span class="num">4</span>The flow</h2>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--you)"></i>You</span>
+    <span><i class="sw" style="background:var(--opus)"></i>Opus</span>
+    <span><i class="sw" style="background:var(--sonnet)"></i>Sonnet</span>
+    <span><i class="sw" style="background:var(--haiku)"></i>Haiku</span>
+    <span><i class="sw" style="background:var(--hook)"></i>Checks and cleanup</span>
+    <span>Dashed: only when needed</span>
+  </div>
+  <ol class="flow">
+    <li><span class="dot d-sonnet">1</span><div class="box"><span class="who pill sonnet">orchestrator</span><span class="h">Triage</span><div class="when">Silent. Scores difficulty and risk to pick the tier (<a href="#tier-rubric">6</a>), picks the phases and the git wish. A T0 question gets its answer here. One obvious edit skips the rest of the flow: the approval question with a one-line summary, then the orchestrator makes the edit itself (<a href="#approval">5</a>).</div></div></li>
+    <li><span class="dot d-sonnet">2</span><div class="box"><span class="who pill sonnet">orchestrator</span><span class="h">Discussion</span><div class="when">Until you explicitly approve: every turn ends with choosable options, never about HOW; nothing changes before Approve.</div></div></li>
+    <li><span class="dot d-you">3</span><div class="box gate"><span class="who pill you">you</span><span class="h">Summary and the one approval</span><div class="when">After Approve: no more questions until the report, except one for a hard contradiction that makes the summary impossible to follow.</div></div></li>
+    <li class="cond"><span class="dot d-haiku">4</span><div class="box"><span class="who pill haiku">git agent</span><span class="h">Branch setup</span><div class="when">Only when the approved summary wants the work itself done on a new branch, or names a base branch other than the current one.</div></div></li>
+    <li><span class="dot d-tri">5</span><div class="box"><span class="who pill plain">planner</span><span class="h">Plan</span><div class="when">At every tier: Haiku at T1, Sonnet at T2 to T4, Opus at T5. Packages are sized by what a worker must understand, not by file count: a mechanical edit across many files stays one package. The plan may raise the tier, never lower it.</div></div></li>
+    <li class="cond"><span class="dot d-mix">6</span><div class="box"><span class="who pill plain">docs agent</span><span class="h">Docs</span><div class="when">When the project has docs the change affects, or you asked. Before the code.</div></div></li>
+    <li><span class="dot d-mix">7</span><div class="box"><span class="who pill plain">coders</span><span class="h">Implementation</span><div class="when">One coder per plan package, up to 5 at once for packages that depend on no other open package and share no file. Each runs the fast checks.</div></div></li>
+    <li class="cond"><span class="dot d-mix">8</span><div class="box"><span class="who pill plain">tester</span><span class="h">Tests</span><div class="when">When the project has tests, or you asked. Always after the code.</div></div></li>
+    <li class="cond"><span class="dot d-hook">9</span><div class="box"><span class="who pill hook">tester or coder, reviewer</span><span class="h">Verification</span><div class="when">The project's own checks (lint, typecheck, build) run once, in the last worker round: the tester's, else a coder's checks-only round. The reviewer only when you asked. Failing checks and blocker or major findings go back to a coder, at most 2 fix rounds, and each fix round runs all the checks again; a failure that comes back for the same reason goes to the debugger (<a href="#fix-rounds">below</a>).</div></div></li>
+    <li class="cond"><span class="dot d-haiku">10</span><div class="box"><span class="who pill haiku">git agent</span><span class="h">Git</span><div class="when">Only when the approved summary asks: any git work its Git line names, such as a commit on a branch, branch, push and pull request, a merge, or another git action.</div></div></li>
+    <li><span class="dot d-hook">11</span><div class="box"><span class="who pill sonnet">orchestrator</span><span class="h">Report and cleanup</span><div class="when">Stops everything that still runs, deletes the task folder, then prints the short report.</div></div></li>
+  </ol>
+  <div class="callout info"><b>With workers, the orchestrator only delegates</b>Beyond T0, planning, docs, code, tests, checks, reviews and git are all worker rounds; the orchestrator writes nothing but its own task notes in <code>.work/</code> and runs read-only git. During triage and the discussion it reads only what it needs to understand your request (file names, a quick look); the planner explores the code after the approval. Up to 5 coders at once is wf's own limit (Claude Code allows more): they share one working tree, their checks run side by side, and every result lands in the orchestrator's context.</div>
+  <p class="small muted">Coders, testers and the docs agent run on Haiku or Sonnet depending on the tier (<a href="#tiers">6</a>). Workers decide open choices themselves and list them as assumptions in the report. This is the flow with everything installed: when you left an agent out at install, its work moves to a coder of the tier, and without the git agent nothing is committed (<a href="#fallbacks">see 2</a>).</p>
+
+  <h3 id="fix-rounds">Fix rounds and the debugger</h3>
+  <p>A failure is a failing check or test, or a blocker or major review finding, after a coder's work. The orchestrator records each one in progress.md with a signature: the check or test name and the core of its error (without paths, line numbers or timings), or a finding's file and claim. A worker whose check fails gives one line per failing test with its first error line and saves the full output to a log in <code>notes/</code>, so the orchestrator can tell the same failure from a new one. Each failure is open, fixed or reported. A failure in code the task did not touch is pre-existing and goes straight to the report, and minor review findings are only reported: neither gets a fix round.</p>
+  <ol class="flow">
+    <li><span class="dot d-mix">1</span><div class="box"><span class="who pill plain">coder</span><span class="h">A new failure: a coder fix round</span><div class="when">As before: the coder fixes it and reruns the failing checks. At most 2 coder rounds per phase.</div></div></li>
+    <li class="cond"><span class="dot d-so">2</span><div class="box"><span class="who pill plain">debugger</span><span class="h">The same failure again: the debugger</span><div class="when">Instead of another coder round. It runs alone: running coders finish first, and no other worker that edits files starts until it is done. It gets the signature, what each attempt tried and the files involved. It reproduces the failure, finds the root cause with evidence, applies the smallest fix, reruns the failing check and the related checks, and reports the root cause.</div></div></li>
+    <li class="cond"><span class="dot d-sonnet">3</span><div class="box"><span class="who pill sonnet">orchestrator</span><span class="h">The last run decides</span><div class="when">The orchestrator decides by the last run of the exact failing command alone: the debugger's own rerun, or a coder's checks-only round when the debugger ran none (for a review finding, a recheck). Passes: the task goes on (noted as possibly flaky when the debugger could not reproduce it). Still failing: no further round, also in a later phase; the report lists it under Not done or failed with the debugger's root cause.</div></div></li>
+  </ol>
+  <p class="small muted">The debugger runs at most once per signature and twice per task, and its runs do not count against the 2 coder rounds. A different failure after its fix is new: a normal coder round within the cap. It never hands off: when its context fills up, it ends with its analysis so far. It runs on Sonnet 5.5 low at T1, Sonnet 5.5 medium at T2, Sonnet 5.5 high at T3, Opus 5.5 medium at T4 and Opus 5.5 high at T5 (<a href="#tiers">6</a>). Not installed, already run for that failure, or already used twice in the task: a repeated failure gets one more coder round within the cap, then the report.</p>
+
+  <h3 id="status-lines">Status lines</h3>
+  <p>Workers run in the background, so the session stays responsive. Every phase change prints one line, skipped phases too. Inside a phase, each fix round and each debugger run gets its own line, at the start and for the debugger's outcome. For example:</p>
+<pre class="term">wf: plan: started
+wf: implementation: 2 coders started (P1, P2)
+wf: verification: lint pass, typecheck pass, build fail
+wf: verification: fix round 1 started (build: Cannot find module x)
+wf: verification: debugger started (build: Cannot find module x)
+wf: verification: debugger fixed build: Cannot find module x
+wf: git: skipped, leave uncommitted
+wf: report: done</pre>
+
+  <h3 id="report">The report</h3>
+<pre class="term"><span class="hl">✅ **Done**</span>
+The stats command prints JSON with --json.
+<span class="hl">📁 **Changed files**</span>
+src/stats.js, README.md, test/stats.test.js
+<span class="hl">🧪 **Checks**</span>
+✅ npm run lint: pass
+✅ npm test: pass
+<span class="hl">💡 **Assumptions**</span>
+- Keys use the same names as the text output
+<span class="hl">🚧 **Not done or failed**</span>
+- nothing
+<span class="hl">🔜 **Follow-ups**</span>
+- none
+
+🌿 Nothing was committed: review the changes in your working tree.</pre>
+  <p class="small muted">A Checks line reads <code>✅ &lt;command&gt;: pass</code>, <code>❌ &lt;command&gt;: fail (&lt;one-line reason&gt;)</code> or <code>⏳ &lt;command&gt;: not rerun after the last fix (was pass)</code>. When the task ran as another tier because its own is not installed, a coder reviewed because the reviewer is not installed, or you asked for git without the git agent installed, a <b>🧩 Setup</b> line before the git line says so, for example <code>ran as T4 (T5 is not installed)</code>. A failure the debugger could not clear is listed under Not done or failed as <code>&lt;failure&gt;: still failing after the debugger; root cause: ...</code>.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>The git line</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td><code>Committed on &lt;branch&gt;: &lt;short hash&gt; &lt;subject&gt;</code>, plus <code>, pushed to &lt;remote&gt;/&lt;branch&gt;</code>, <code>, pull request &lt;url&gt;</code> and <code>, merged</code></td><td>The git agent did what the summary asked.</td></tr>
+        <tr><td><code>Nothing was committed: review the changes in your working tree.</code></td><td>You asked for no git, and nobody committed, moved a branch or stashed during the task.</td></tr>
+        <tr><td><code>Not committed: no git agent is installed. To do it yourself:</code> and the commands, one per line</td><td>You asked for git, but the git agent is not installed.</td></tr>
+        <tr><td><code>HEAD or refs moved during the task: &lt;old&gt;..&lt;new&gt;; wf did not commit</code></td><td>Someone else committed, moved a branch or stashed during the task. wf then commits nothing.</td></tr>
+        <tr><td><code>Not committed: &lt;reason&gt;</code> or <code>Pull request not opened: &lt;reason&gt;</code></td><td>The git agent stopped: it refused, a hook failed, a push was rejected, the secret check found something, or a remote or gh login is missing. The reason and the commands to run yourself also go under Not done or failed.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small muted">Edits that someone else made during the task are listed and left unstaged: the git agent stages only the files the task's workers changed that had no uncommitted changes when the task started. A file that already had changes before the task stays unstaged too, even when a worker changed it, so your own earlier edits are never committed; the report lists it under Not done or failed.</p>
+
+  <h3 id="session-names">Session names</h3>
+  <p>At your first message a hook (<code>hooks/title.mjs</code>) asks a small Haiku model for a short name made from that prompt and sets the session title to the name in sentence case with spaces and no prefix, for example <code>Fix login timeout</code>: the tier is not known yet. If the model does not answer within 12 seconds, the name is built from the first words of the prompt. An empty prompt or one that starts with <code>/</code> names nothing.</p>
+  <p>After the session's first approval, at your next typed message, the session is renamed once to <code>wf(T&lt;n&gt;)-</code> plus that task's short name in the same style, for example <code>wf(T3)-Login fix</code>. The tier <code>&lt;n&gt;</code> comes from the Tier line of the approved summary; without a readable Tier line the new name has no prefix. Later approvals in the same session never rename it, and a tier raise by the planner does not either. Older <code>[WF] </code> and <code>wf-</code> names keep working.</p>
+  <p>After <code>/clear</code> the old title is gone and no title is shown; nothing is named until your next typed message, which names the new session.</p>
+  <p class="small muted">A title you set yourself is never overwritten. The hook sends one small Haiku request per session. A live install gets the hook after you run the installer again.</p>
+
+  <h3 id="nothing-left-behind">Nothing left behind</h3>
+  <p>During a task wf works in <code>&lt;project&gt;/.work/&lt;YYYYMMDD-HHMM-slug&gt;/</code> (summary.md, plan.md, progress.md, handoff notes, notes/), and <code>.work/.gitignore</code> holds <code>*</code>, so git never sees it. At the report the keep-warm watcher and every worker stop, and <code>wf-clean</code> deletes the task folder, and <code>.work/</code> too when nothing else is in it. Only the context ledger stays, one small file per session with each agent's token count, in <code>state/</code> of the install folder, pruned after 7 days.</p>
+  <p>When a session ends mid-task, the next <code>wf</code> session in that project asks at your first message: <b>Resume</b> (no new approval), <b>Discard</b> (deletes the task folder; project files stay), <b>Leave it</b> or <b>Something else</b> (type your own answer; an unclear one gets the question again). A task folder that another live wf session is working on (active in the last 75 minutes) is left alone: it gets no question, and <code>wf-clean</code> refuses to delete it. A new request you type while a resumed task runs waits for that task's report.</p>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="approval">
+  <h2><span class="num">5</span>The approval</h2>
+  <p>While points are still open, every turn of the discussion ends with a question with answers you can pick: at most about 3 questions per turn, each with 2 or 3 answers, the recommended one first and marked <code>(Recommended)</code>, and always a last answer, <b>Something else</b>, where you type your own (every question wf asks has it). It never asks about git, the tier, the phases, docs, tests or a review: the summary states them, and you change them there with Change something. The first question starts with a short picture of where things stand:</p>
+  <div class="summary">
+    <span class="h">📍 Where we are</span>
+    <ul><li>✅ Decided: a --json option for the stats command; the plain text output stays</li><li>❓ Open: should --json also cover the summary line?</li><li>👉 Now I need: your answer on the summary line</li></ul>
+  </div>
+  <p>A point never drops out of that picture: it moves from Open to Decided, also when you leave it out. As soon as nothing is open, the orchestrator prints a short summary in plain words, for example:</p>
+  <div class="summary">
+    <span class="h">🎯 What you want</span>
+    <ul><li>The stats command gets a --json option that prints the same numbers as JSON</li></ul>
+    <span class="h">🔒 What stays the same</span>
+    <ul><li>Everything else, including the plain text output</li></ul>
+    <span class="h">🚀 What will run</span>
+    <ul><li>📋 Plan and implementation</li><li>📝 Docs: the README lists every option</li><li>🧪 Tests: the project has tests</li><li>🔎 Checks: lint and typecheck</li></ul>
+    <span class="h">🌿 Git: <span style="font-weight:400">leave uncommitted: nothing is committed</span></span>
+    <span class="h">📊 Tier: <span style="font-weight:400">T2: new user-facing behavior in one module, needs new tests</span></span>
+    <span class="h">⏰ Estimate: <span style="font-weight:400">about 15 to 30 minutes</span></span>
+    <span class="h">👉 Now I need: <span style="font-weight:400">your answer below: approve all of this, change something, or cancel.</span></span>
+  </div>
+  <p>The Tier line gives the tier with the short reason from triage. The Estimate line is the wall-clock time from your approval to the report, judged from the tier, the phases and the size of the task (typically T1 5 to 15 minutes, T2 15 to 30, T3 30 to 60, T4 60 to 120, T5 120 minutes or more, given in hours above 2 hours); every summary has it. The Git line follows what you asked. The usual forms:</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>You asked</th><th>Git line</th><th>What the git agent does</th></tr></thead>
+      <tbody>
+        <tr><td>nothing about git</td><td><code>leave uncommitted: nothing is committed</code></td><td>nothing: you review the changes in your working tree</td></tr>
+        <tr><td>a commit</td><td><code>commit on a branch</code></td><td>commits the task's own files on a feature branch</td></tr>
+        <tr><td>a push or a pull request</td><td><code>branch, push and open a pull request</code></td><td>commits on a feature branch, pushes that branch and opens a pull request</td></tr>
+        <tr><td>another git action, e.g. delete merged branches</td><td><code>delete the merged branches, local and remote</code></td><td>runs exactly that action</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">Any git action you ask for goes on the Git line in plain words, alone or after one of these forms, for example <code>commit on main and push it</code>, or <code>branch, push and open a pull request, then merge it and delete the branch</code>. The Git line names every git action you asked for, with the branches, tags and remotes you named, and nothing you did not ask for: the git agent does exactly what it says. Unless you ask otherwise, a commit lands on a feature branch and a push comes with a pull request. <code>, then merge it</code> is added only when you asked for the merge, the branch name or base when you gave one, and <code>; branch set up before the work</code> when you want the work itself done on that branch from the start, or when you named a base branch other than the current one, so the new branch starts from that base while the working tree is still clean. Without the git agent installed, a git wish becomes <code>leave uncommitted: no git agent is installed; asked: &lt;the Git line it would have, with the branch, base and merge&gt;; the report lists the commands</code>, so the report lists the right commands even after a compaction or a resume.</p>
+  <div class="ask" role="group" aria-label="The approval question">
+    <div class="q">Approve this summary? After that I work without questions until the report.</div>
+    <div class="opts">
+      <div class="opt main"><b>Approve</b><span>Start the work; no more questions until the report</span></div>
+      <div class="opt"><b>Change something</b><span>Say what to change</span></div>
+      <div class="opt"><b>Cancel</b><span>Drop this request; nothing changes</span></div>
+      <div class="opt"><b>Something else</b><span>Type your own answer</span></div>
+    </div>
+  </div>
+  <p class="small">A summary too long for one question is split at a section break over two questions asked together, <code>Approval 1/2</code> and <code>Approval 2/2</code>, each with Approve, Change something, Cancel and Something else. It is approved only when you pick Approve in both; Cancel in either cancels, and any other pair counts as Change something.</p>
+  <div class="grid">
+    <div class="card"><span class="h">Before Approve</span><p>The orchestrator only reads and talks: not a single line changes in any file or setting. Every turn shows where things stand and ends with choosable options (only a turn in which the orchestrator compacts itself ends with one short line, and the picture comes back right after); it asks back until nothing is open, then shows the full summary with Approve, Change something, Cancel and Something else on every turn until you pick Approve or Cancel. Only Approve, a typed answer that only approves, or "approved, no questions" in the request starts the work; "ok" or "do it" said earlier, or an approval with a question or change in it, does not. After any change the summary is shown again in full. The summary names every change, also outside the project, and what it does not list is not approved. Points you dropped in the discussion are listed under Left out. The picture and the summary sit inside the question, so they are always on screen.</p></div>
+    <div class="card"><span class="h">After Approve</span><p>No questions until the report. Two exceptions: a hard contradiction that makes the summary impossible to follow (one question: the recommended way out, one alternative, stop the task or Something else), and the resume question when a later session finds the task unfinished (<a href="#nothing-left-behind">see 4</a>).</p></div>
+    <div class="card"><span class="h">You can still talk</span><p>Write at any time: the orchestrator answers briefly, follows a change that drops or narrows the work, says in one line that anything new waits for the report, which lists it under Follow-ups as <code>Waiting: &lt;it&gt;</code> (your next message about it starts its own summary and approval), and stops everything when you ask it to.</p></div>
+    <div class="card"><span class="h">T0 tiny edits</span><p>One obvious edit: an approval question with the same four answers (Approve, Change something, Cancel, Something else), its text a one-line summary (naming the file when it is outside the project, saying nothing is committed and the time it takes, usually about 1 minute) followed by <code>Approve this edit? After that I make it and reply in one or two lines.</code> After Approve the orchestrator makes the edit itself, runs the project's fast check for that file when there is one, and replies in one or two lines: no task folder, no agents. Asking for a commit, push or pull request makes it T1 so the git agent can do it; without the git agent it stays T0 and the reply lists the git commands.</p></div>
+  </div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="tiers">
+  <h2><span class="num">6</span>Tiers and models</h2>
+  <div class="tablewrap">
+    <table class="tiers">
+      <thead><tr><th>Role</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th></tr></thead>
+      <tbody>
+        <tr><td class="k">orchestrator<br>(main thread)</td><td colspan="5"><span class="pill sonnet">Sonnet 5.5 medium</span> one <code>wf:orchestrator</code> for every tier</td></tr>
+        <tr><td class="k">planner</td><td><span class="pill haiku">Haiku 5.5 medium</span></td><td><span class="pill sonnet">Sonnet 5.5 low</span></td><td><span class="pill sonnet">Sonnet 5.5 medium</span></td><td><span class="pill sonnet">Sonnet 5.5 high</span></td><td><span class="pill opus">Opus 5.5 high</span></td></tr>
+        <tr><td class="k">docs</td><td><span class="pill haiku">Haiku 5.5 low</span></td><td><span class="pill haiku">Haiku 5.5 medium</span></td><td><span class="pill haiku">Haiku 5.5 high</span></td><td><span class="pill sonnet">Sonnet 5.5 low</span></td><td><span class="pill sonnet">Sonnet 5.5 medium</span></td></tr>
+        <tr><td class="k">coder</td><td><span class="pill haiku">Haiku 5.5 low</span></td><td><span class="pill haiku">Haiku 5.5 medium</span></td><td><span class="pill haiku">Haiku 5.5 high</span></td><td><span class="pill sonnet">Sonnet 5.5 medium</span></td><td><span class="pill sonnet">Sonnet 5.5 high</span></td></tr>
+        <tr><td class="k">tester</td><td><span class="pill haiku">Haiku 5.5 low</span></td><td><span class="pill haiku">Haiku 5.5 medium</span></td><td><span class="pill haiku">Haiku 5.5 high</span></td><td><span class="pill sonnet">Sonnet 5.5 medium</span></td><td><span class="pill sonnet">Sonnet 5.5 high</span></td></tr>
+        <tr><td class="k">reviewer (on request)</td><td><span class="pill haiku">Haiku 5.5 medium</span></td><td><span class="pill sonnet">Sonnet 5.5 low</span></td><td><span class="pill sonnet">Sonnet 5.5 medium</span></td><td><span class="pill sonnet">Sonnet 5.5 high</span></td><td><span class="pill opus">Opus 5.5 high</span></td></tr>
+        <tr><td class="k">debugger<br>(repeated failure)</td><td><span class="pill sonnet">Sonnet 5.5 low</span></td><td><span class="pill sonnet">Sonnet 5.5 medium</span></td><td><span class="pill sonnet">Sonnet 5.5 high</span></td><td><span class="pill opus">Opus 5.5 medium</span></td><td><span class="pill opus">Opus 5.5 high</span></td></tr>
+        <tr><td class="k">git<br>(when the summary asks)</td><td colspan="5"><span class="pill haiku">Haiku 5.5 medium</span> one <code>wf:git</code> for every tier</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>High effort is used for the coder, tester and debugger at T3 and T5, the docs agent at T3, and the planner and the reviewer at T4 and T5. Every 5.5 model has a 1M token window. The agents (32 with everything installed: the orchestrator, 5 each of planner, docs, coder, tester, reviewer and debugger, and the one git agent) are <code>wf:orchestrator</code>, <code>wf:&lt;role&gt;-t&lt;n&gt;</code> and <code>wf:git</code>; <code>wf-settings.json</code> denies <code>Agent(model:*)</code> and <code>Agent(effort:*)</code>, so models and efforts stay pinned. It also denies the tools wf never uses (<code>Artifact</code>, <code>Workflow</code>, <code>ScheduleWakeup</code>, <code>SendFeedback</code>, <code>ReportFindings</code>, <code>ListAgents</code>), so a wf session does not load them; plain <code>claude</code> keeps them all. It also turns ultracode off for wf sessions, even when your own settings turn it on, and allows <code>mcp__wf__compact</code>, so the orchestrator compacts itself without a permission prompt. To change a model or effort, edit <code>roles</code> in <code>registry.json</code> and install again.</p>
+  <div class="callout info"><b>This table is the full install</b>Install steps 1 to 3 can leave out tiers, agents and models. A missing tier runs as the nearest installed one, a missing agent's work moves to a coder of the tier (no git agent: nothing is committed), and an unticked model is replaced by the nearest ticked one (<a href="#fallbacks">see 2</a>).</div>
+
+  <h3 id="tier-rubric">How a task gets its tier</h3>
+  <p>Difficulty and risk decide the tier, never the number of files: replacing one email address in 30 files is still a very small task. Triage scores the change on twelve factors, 0 to 2 each, total 0 to 24:</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Factor</th><th>0</th><th>1</th><th>2</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Ambiguity</td><td>fully specified</td><td>small choices</td><td>design decisions</td></tr>
+        <tr><td class="k">Reasoning</td><td>mechanical: replace, rename, version bump</td><td>local logic</td><td>cross-cutting or algorithmic</td></tr>
+        <tr><td class="k">Coupling</td><td>one concept</td><td>one module's behavior</td><td>several modules, a public interface or a stored format</td></tr>
+        <tr><td class="k">Risk</td><td>none</td><td>user-facing behavior</td><td>security, data, money, migrations, concurrency or anything irreversible</td></tr>
+        <tr><td class="k">Verifiability</td><td>existing checks cover it</td><td>needs new tests</td><td>hard to verify: timing, UI feel, external services</td></tr>
+        <tr><td class="k">Precedent</td><td>the project already does the same thing</td><td>a similar pattern to adapt</td><td>nothing like it in the project</td></tr>
+        <tr><td class="k">Context</td><td>a few lines or one file to understand</td><td>one module and its callers</td><td>many modules or long code to understand</td></tr>
+        <tr><td class="k">Reversibility</td><td>a revert undoes it</td><td>needs cleanup beyond a revert: generated files, installed copies, caches</td><td>cannot be undone: data written or deleted, a release, a sent message</td></tr>
+        <tr><td class="k">Outside dependencies</td><td>none</td><td>a library or tool the project already uses</td><td>external services, APIs, networks or tools outside the project</td></tr>
+        <tr><td class="k">Domain</td><td>general code</td><td>a domain with its own rules: dates, time zones, i18n, layout, regexes</td><td>specialist knowledge: security, cryptography, money, compilers, numerics, legal rules</td></tr>
+        <tr><td class="k">Concurrency</td><td>sequential</td><td>async order matters in one place</td><td>parallel work, shared state, locks, races or retries</td></tr>
+        <tr><td class="k">Backward compatibility</td><td>nothing depends on the old behavior</td><td>internal callers or saved settings must keep working</td><td>a public API, CLI, file or stored format, or users' existing data must keep working</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid">
+    <div class="card you"><span class="h">T0: any answer, or 0 to 2 and one obvious edit</span><p>The orchestrator alone, no agents. Example: fix a typo (0).</p></div>
+    <div class="card haiku"><span class="h">T1: total 3 to 6, or 0 to 2 for more than one obvious edit</span><p>Examples: replace an email address across 30 files (1); a new CLI flag that only prints a value (about 6).</p></div>
+    <div class="card haiku"><span class="h">T2: total 7 to 10</span><p>Example: a new validation rule with its messages and tests in one module (about 8 to 10).</p></div>
+    <div class="card sonnet"><span class="h">T3: total 11 to 14</span><p>Example: a new installer step across several modules, the saved manifest and the docs (about 14).</p></div>
+    <div class="card sonnet"><span class="h">T4: total 15 to 19</span><p>Examples: a migration that renames a column (about 16); a job queue with parallel workers, retries and a new stored format (about 19).</p></div>
+    <div class="card opus"><span class="h">T5: total 20 to 24</span><p>Examples: moving stored passwords to a new hashing scheme on live data (about 20); a payment flow change across services with a data migration (about 22).</p></div>
+  </div>
+  <ul>
+    <li>Overrides, after the total: risk 2 in the logic being changed means at least T2 (a mechanical edit inside risky files does not count); asking for extra care means T5.</li>
+    <li>When unsure between two tiers, the discussion settles it, else the higher one wins. The planner may raise the tier after reading the code, never lower it. A prefix (<code>T0:</code>, <code>T1:</code>, <code>T2:</code>, <code>T3:</code>, <code>T4:</code>, <code>T5:</code>) wins over the score.</li>
+    <li>The summary's Tier line gives the short reason, for example <code>T4: several modules, a stored format, needs new tests</code>.</li>
+  </ul>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="skills">
+  <h2><span class="num">7</span>Skills and adding one</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Skill</th><th>Source</th><th>Required for</th><th>Default for</th></tr></thead>
+      <tbody>
+        <tr><td class="k">discussion</td><td>ours</td><td>orchestrator</td><td></td></tr>
+        <tr><td class="k">triage</td><td>ours</td><td>orchestrator</td><td></td></tr>
+        <tr><td class="k">execution-plan</td><td>ours</td><td>orchestrator, planner</td><td></td></tr>
+        <tr><td class="k">final-report</td><td>ours</td><td>orchestrator</td><td></td></tr>
+        <tr><td class="k">context-cache</td><td>ours</td><td>all eight roles</td><td></td></tr>
+        <tr><td class="k">javascript</td><td>ours</td><td></td><td>planner, coder, tester, reviewer, debugger</td></tr>
+        <tr><td class="k">testing</td><td>ours</td><td>tester</td><td>coder, debugger</td></tr>
+        <tr><td class="k">vitest</td><td>ours, antfu/skills reference vendored</td><td></td><td>tester</td></tr>
+        <tr><td class="k">docs-writing</td><td>ours</td><td>docs</td><td></td></tr>
+        <tr><td class="k">code-review</td><td>ours</td><td>reviewer</td><td></td></tr>
+        <tr><td class="k">debugging</td><td>ours</td><td>debugger</td><td></td></tr>
+        <tr><td class="k">git</td><td>ours</td><td>git</td><td></td></tr>
+        <tr><td class="k">seo</td><td>web-quality-skills, patched</td><td></td><td>reviewer</td></tr>
+        <tr><td class="k">core-web-vitals</td><td>web-quality-skills</td><td></td><td>reviewer</td></tr>
+        <tr><td class="k">web-performance</td><td>web-quality-skills</td><td></td><td>reviewer</td></tr>
+        <tr><td class="k">accessibility</td><td>web-quality-skills (WCAG 2.2)</td><td></td><td>reviewer</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid">
+    <div class="card"><span class="h">Inlined</span><p>The skills ticked for a role go into that role's agent file: always loaded, they survive compaction.</p></div>
+    <div class="card"><span class="h">Library</span><p>Every agent file ends with an index of the other skills. The planner names what each package needs; the worker reads it on demand. A coder standing in for a missing planner or reviewer reads execution-plan or code-review there.</p></div>
+    <div class="card"><span class="h">Not Claude Code skills</span><p>They live in <code>plugin/library/</code>, so they never show up as <code>/</code> skills or trigger on their own.</p></div>
+  </div>
+  <div class="callout guard"><b>The git skill</b>The git agent's rulebook. Its first rule, in bold: do exactly the git work the approved summary's Git line names, and nothing else. Any git or gh command is allowed for that work (deleting branches, a force push, a push or commit to main, rebase, reset, tags, amend, merge); a git action the Git line does not name is never run. It also covers branch names (<code>&lt;type&gt;/&lt;slug&gt;</code>, or the name you gave), staging only the task's own files from the orchestrator's list, a secret check before every commit, the commit message in the project's own style, the pull request title and body from the summary and the checks, merges only when the summary asks, and no <code>--no-verify</code> unless asked.</div>
+
+  <h3 id="adding-a-skill">Adding a skill</h3>
+  <ol class="steps">
+    <li><span class="h">Create the folder in your clone</span>
+      <p><code>skills/&lt;name&gt;/SKILL.md</code>, the name in lowercase words joined by hyphens. Extra text files go in <code>skills/&lt;name&gt;/references/</code>.</p>
+    </li>
+    <li><span class="h">Start SKILL.md with this frontmatter</span>
+<pre class="term">---
+name: my-skill
+description: One line, at most 300 characters, saying what it covers and when to use it.
+metadata:
+  wf-required: [tester]
+  wf-default: [coder, reviewer]
+---</pre>
+      <p class="small"><code>name</code> equals the folder name. Roles: orchestrator, planner, docs, coder, tester, reviewer, debugger, git. <code>wf-required</code>: always included, locked. <code>wf-default</code>: ticked. Both may be <code>[]</code>. <code>{{skillDir}}</code> in the body becomes the installed skill folder, and <code>{{libraryDir}}</code> the installed library, for a link to another skill such as <code>{{libraryDir}}/testing/SKILL.md</code>. Any other <code>{{word}}</code> in SKILL.md that is not a wf placeholder fails lint and the install, so write a template example with spaces, as in <code>{{ title }}</code>.</p>
+    </li>
+    <li><span class="h">Lint it, from the clone folder</span>
+      <div class="cmd"><code>node wf.mjs lint</code></div>
+    </li>
+    <li><span class="h">Install again</span>
+      <div class="cmd"><code>node wf.mjs install</code></div>
+      <div class="exp">The checklists show the new skill, ticked for its default roles. No other file needs a change.</div>
+    </li>
+  </ol>
+  <div class="callout info"><b>Vendored skills and licenses</b>seo, core-web-vitals, web-performance and accessibility come from addyosmani/web-quality-skills (commit <code>afa8da9</code>, MIT, Addy Osmani); the Vitest reference from antfu/skills (commit <code>8886fe2</code>, MIT, Anthony Fu). Each folder keeps the upstream <code>LICENSE</code> and a <code>SOURCE.md</code> listing every local change. No scripts are vendored.</div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="context">
+  <h2><span class="num">8</span>Context and cache</h2>
+  <p class="lead">100 percent always means the full 1M token window, so the zones are absolute.</p>
+  <div class="zones" role="img" aria-label="Context zones on a 1M window: below 500K nothing happens, 500K to 800K is the buffer, from 800K a worker hands off and the orchestrator compacts, the engine's own compaction starts at 850K">
+    <div class="zbar">
+      <div class="z1">nothing</div>
+      <div class="z2">buffer: decide</div>
+      <div class="z3">hand off, compact</div>
+      <span class="zmark"></span>
+    </div>
+    <div class="zaxis">
+      <span style="left:0">0</span>
+      <span style="left:50%">500K</span>
+      <span style="left:80%">800K</span>
+      <span class="c" style="left:85%">850K backstop</span>
+      <span style="left:100%">1M</span>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="card hook"><span class="h">Measured after every tool call</span><p>A hook reads each agent's own transcript and adds a <code>wf context:</code> notice: entering the buffer, every further 50K, and from 800K every 5 tool calls.</p></div>
+    <div class="card sonnet"><span class="h">Workers hand off</span><p>In the buffer a worker estimates what it still needs. When used plus needed would pass 800K, it finishes the current step, writes <code>handoff-&lt;role&gt;-&lt;n&gt;.md</code> and ends with <code>Status: handoff</code>; from 800K it does that at once, after only the edit in hand. The orchestrator starts a fresh worker of the same agent from the note, and before it resumes a finished worker for a fix round it checks that worker's tokens with <code>wf-agents</code>. The reviewer writes no file: the orchestrator saves the note from the end of its Open issues. The debugger writes no note: it ends blocked instead, with its analysis so far, and a rerun of the failure decides.</p></div>
+    <div class="card opus"><span class="h">The orchestrator compacts itself</span><p>In the buffer it estimates what the rest of the task needs. When that stays under 800K, nothing happens. Otherwise it starts no new worker and, once none runs, calls <code>mcp__wf__compact</code> and ends its turn. Past 800K it does that at once, whatever runs.</p></div>
+  </div>
+  <ol class="steps">
+    <li>The wf plugin's module <code>hooks/compact.mjs</code> runs the compaction when the orchestrator's turn ends, because a plugin can make Claude Code compact only between turns.</li>
+    <li>In the buffer it waits until a turn ends with no subagent running, so no worker result arrives during the compaction. From 800K it compacts at the turn end whatever runs, even without the call.</li>
+    <li>A PreCompact hook lists what the summary must keep, and when the orchestrator called the tool the module adds its next step. Right after an approval the orchestrator first writes the task folder, summary.md and progress.md, because only summary.md carries an approval through a compaction.</li>
+    <li>After a compaction the orchestrator asked for, with no worker running, a message that starts with <code>wf compaction done</code> wakes it. It comes from the plugin, not from you, and approves nothing. The orchestrator rereads progress.md, summary.md and plan.md and goes on. Otherwise the next worker result or your next message wakes it.</li>
+    <li>The orchestrator never calls the tool in the turn that ends with the report or a T0 answer, and a turn that ends with the report drops a queued compaction, so nothing follows the report (past 800K that turn is still compacted, without a wake-up). A <code>/clear</code>, a resume or a turn that ends below 500K drops a queued compaction too. The tool refuses a call below 500K or from a worker, and a turn the wake-up started never wakes the orchestrator a second time.</li>
+  </ol>
+  <div class="callout info"><b>Interactive sessions only</b>Plugin compaction needs an interactive session, which is how <code>wf</code> runs. In a headless <code>claude -p</code> run the module registers no tool and only the engine's compaction at 850K applies. Each compaction the module runs shows a dim transcript line such as <code>wf: compacting the orchestrator's context at 812K</code>, a queued one that waits shows <code>wf: compaction waits until no worker runs (2 running)</code> once, and a failure shows <code>wf: compaction failed: ...</code>, never in <code>state/hook-errors.log</code>. The engine's 850K compaction also stays as the backstop inside a long turn.</div>
+  <div class="callout warn"><b>Why wf never sets autoCompactWindow</b><code>autoCompactWindow</code> and <code>CLAUDE_CODE_AUTO_COMPACT_WINDOW</code> redefine the window itself, so 100 percent would become the smaller number. The launcher sets only <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=86.74</code>, which moves the trigger: 86.74 percent of 980,000 (1M minus the 20K output reserve) is 850,052 tokens. Lint refuses the other two; keep them out of your own settings.json too.</div>
+
+  <h3 id="prompt-cache">The prompt cache</h3>
+  <p>Each agent has its own cache, set in its frontmatter as <code>experimental.cacheTtl</code>: coder and debugger 1 hour, tester, planner, docs, reviewer and git 5 minutes. The orchestrator keeps the main-thread default, 1 hour on a subscription. The launcher no longer sets <code>CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL</code>, because that variable beat the per-agent setting. A cache entry lives 60 minutes (1 hour agents) or 5 minutes (5 minute agents) from the agent's last request.</p>
+  <div class="timeline" role="img" aria-label="Keep-warm timeline for the 1 hour cache: the last request at 0 minutes, the keep-warm ping at 58 minutes, expiry at 60 minutes. For the 5 minute cache: a ping at 4 minutes, expiry at 5 minutes">
+    <div class="line"></div>
+    <span class="tick" style="left:0"></span>
+    <span class="tick" style="left:96.6%; background:var(--you)"></span>
+    <span class="tick" style="left:calc(100% - 3px); background:var(--hook)"></span>
+    <span class="lab" style="left:0"><b>0 min</b>last request</span>
+    <span class="lab" style="right:3.4%; text-align:right"><b>58 min</b>keep-warm ping</span>
+    <span class="lab" style="right:0; top:-8px; text-align:right"><b>60 min: expiry</b></span>
+  </div>
+  <ul>
+    <li>Right after the approval the orchestrator starts the <code>wf-keepwarm</code> watcher in the background. It finds the main thread and every subagent of the session by itself, from the session's ledger, finished ones included, so the orchestrator passes no agent list (<code>--agents</code> still works for an agent the ledger does not hold). It polls every 20 seconds and costs no tokens while it waits.</li>
+    <li>When the main thread or a 1 hour agent (coder or debugger) has been idle 58 minutes, or a 5 minute agent (tester, planner, docs, reviewer or git) has been idle 4 minutes, the watcher exits with one ping line per agent that is due and wakes the orchestrator. That turn refreshes the main thread; a worker gets <code>wf keep-warm ping: reply ok only</code>. A worker that is still running is not pinged, and the git agent's reply <code>ok</code> is ignored: its result stays final.</li>
+    <li>A 5 minute agent is pinged only while its last real work is at most 30 minutes old (a ping is not work). After that the watcher ignores it, and resuming it pays the cache rewrite.</li>
+    <li>After 6 main-thread pings in a row with nothing else happening (about 6 idle hours) it stops; your next message starts it again. At the report it is stopped.</li>
+    <li>The 5 minute setting is read from the Claude Code binary, not from its documentation, and is not checked live yet.</li>
+  </ul>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="safety">
+  <h2><span class="num">9</span>Safety</h2>
+  <h3 id="git-guard">The git guard</h3>
+  <p>A hook checks every Bash command that mentions git or gh (on Windows every such PowerShell command too) and every Monitor command, in wf sessions only. It sees through <code>bash -c</code> (its positional parameters too), <code>env</code>, <code>sudo</code>, <code>xargs</code>, <code>find -exec</code>, operators and subshells.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Who</th><th>Read-only git and gh</th><th>Every other git and gh command: add, commit, push, gh pr create, merge, reset, force ...</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Workers</td><td class="yes">allowed</td><td class="no">refused</td></tr>
+        <tr><td class="k">The orchestrator</td><td class="yes">allowed</td><td class="no">refused</td></tr>
+        <tr><td class="k">wf:git</td><td class="yes">allowed</td><td><span class="yes">allowed</span>: the guard does not check it; the approved Git line sets what it does</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul>
+    <li>Read-only means status, diff, log, show, blame, grep, ls-files and the other read forms, <code>fetch [origin [&lt;branch&gt;]]</code>, and gh read forms. A read that points git at another program through a config override or an environment variable (a pager, an editor, an ssh command) is refused too, for example <code>GIT_PAGER=delta git log</code>, also when an earlier <code>export</code> in the same command set the variable.</li>
+    <li>When the guard cannot even start or times out (10 seconds), the command is blocked. Other hook errors go to <code>state/hook-errors.log</code> and never block; only the compaction module's failures show as a dim line in the transcript instead (<a href="#context">8</a>).</li>
+    <li>The guard cannot see git writes hidden inside script files or package scripts, nor variables a sourced file sets; the house rules forbid routing a git write through them. An <code>allow-git</code> file from an older wf version gives nothing: the guard no longer reads it.</li>
+  </ul>
+<pre class="term wrap">wf guard: subagent wf:coder-t1 may not run "git commit -m test": only wf:git runs git and gh writes; leave the changes in the working tree for the orchestrator.</pre>
+  <p class="small muted">The orchestrator's refusal ends with <code>delegate them to wf:git only when it is installed and the approved summary asks for git work, else leave the work uncommitted and list the commands in the report.</code></p>
+
+  <h3 id="git-agent">The git agent</h3>
+  <p><code>wf:git</code> (Haiku 5.5, medium effort, one agent for every tier) is the only wf agent that writes git. The orchestrator starts it only when the approved summary asks for git work: a branch before the work when the summary says so, and the git phase at the end. It has no tools list, so it also gets MCP servers you add later, such as a GitHub one.</p>
+  <div class="grid">
+    <div class="card hook"><span class="h">Only what you asked</span><p>It does only the git work the Git line names, and nothing it does not name. It has no branch, force or history limit. Without a named branch it commits on a feature branch, and the change reaches main, master, develop or the default branch through a pull request.</p></div>
+    <div class="card"><span class="h">Only the task's files</span><p>The orchestrator lists the files its workers changed; the git agent stages exactly those, never <code>.work/</code> or someone else's edits, and runs a secret check before every commit.</p></div>
+    <div class="card"><span class="h">No shortcuts</span><p>Force pushes, rebases, resets, amends, tags and <code>--no-verify</code> only when the Git line asks, and never to get another step through. A failing hook, a rejected push or a secret-check hit stops it, and the report says why and lists the commands; the orchestrator never retries it on its own.</p></div>
+  </div>
+
+  <h3 id="isolation">Isolation</h3>
+  <div class="grid">
+    <div class="card opus"><span class="h">wf sessions</span><p>The launcher runs <code>claude --plugin-dir &lt;install folder&gt;/plugin --settings &lt;install folder&gt;/wf-settings.json --agent wf:orchestrator</code> with a few environment variables: 10 minute Bash timeouts, workers cannot start agents of their own, the compaction trigger (<a href="#context">8</a>), and <code>CLAUDE_CODE_THRIFTY_SONIC=0</code>, which turns off a Claude Code reminder to change files with sed or scripts, so workers edit with Write and Edit. The plugin, the settings and the variables exist for that session only.</p></div>
+    <div class="card"><span class="h">Plain claude</span><p>No wf agent, skill, hook, setting or variable. The one global file is <code>~/.claude/rules/wf-house-rules.md</code>, on purpose. Install never writes <code>settings.json</code>, except the one-time v1 migration.</p></div>
+    <div class="card sonnet"><span class="h">Concise answers</span><p><code>wf-settings.json</code> sets <code>"outputStyle": "Concise"</code>, Claude Code's built-in style, for the main thread; it wins over a project's own. Subagents never get an output style, so every worker's rules carry a short Reply style: lead with the result, no preamble or recap, short by default, but errors, failing checks, warnings and the result block always complete.</p></div>
+  </div>
+  <div class="callout guard"><b>House rules</b>Code in English (Hungarian only in i18n data), no comments in code except TODO, never commit, push or run any other git write unless asked (for wf: only <code>wf:git</code>, only when the approved summary says so, exactly the git work the summary's Git line names: any git or gh command is allowed for that work, such as deleting branches, a force push, a push or commit to main, rebase, reset, tags, amend and merge, and nothing the Git line does not name; unless the Git line says otherwise it commits on a feature branch and opens a pull request), never an em or en dash, and every behavior change updates, in the same task and unasked, all docs and guidelines that describe it (README, docs/, guides, changelogs, skills, agent prompts, rule files): a change is not done while any of them still describes the old behavior. Workers never delete with <code>rm</code> and a glob, a variable or a relative path.</div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="commands">
+  <h2><span class="num">10</span>Commands</h2>
+  <p>All run from your clone folder. Exit codes: 0 ok, 1 problems found, 2 usage error (also when Node is older than 22).</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Command</th><th>Flags</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="k">install</td><td><code>--yes</code> <code>--dry-run</code> <code>--reset</code> <code>--skills-reset</code> <code>--json</code></td><td>Checks Claude Code, lints, the five install steps (tiers, agents, models, skills, summary), compiles, backs up, writes, verifies, PATH hint.</td></tr>
+        <tr><td class="k">uninstall</td><td><code>--yes</code></td><td>Backs up, removes everything wf installed; keeps <code>backups/</code> and <code>adopted/</code>.</td></tr>
+        <tr><td class="k">restore</td><td><code>--to &lt;stamp&gt;</code> <code>--yes</code></td><td>Backs up the current state, then puts a backup set back; the latest by default undoes the last install or uninstall. The last 5 sets are kept, plus the sets that hold your v1 install.</td></tr>
+        <tr><td class="k">diff</td><td><code>--reset</code></td><td>What install would change with your saved answers (<code>--reset</code>: with the defaults), with line counts.</td></tr>
+        <tr><td class="k">doctor</td><td></td><td>Versions, launcher and PATH, file hashes, your install choices, plugin validate, v1 leftovers, state folder, hook self-test.</td></tr>
+        <tr><td class="k">lint</td><td><code>--self</code></td><td>Lints the sources; <code>--self</code> adds the house rules over the repository.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cmd"><code>node wf.mjs --help</code></div>
+  <div class="cmd"><code>node wf.mjs install --dry-run</code></div>
+  <div class="cmd"><code>node wf.mjs install --reset</code></div>
+  <div class="cmd"><code>node wf.mjs diff</code></div>
+  <div class="cmd"><code>node wf.mjs doctor</code></div>
+  <div class="cmd"><code>node wf.mjs lint --self</code></div>
+  <div class="cmd"><code>node wf.mjs restore</code></div>
+  <p class="small muted"><code>--yes</code> (or <code>-y</code>) asks nothing: install takes the saved answers (the defaults the first time). In a terminal, install's only confirmation is Install on the summary screen. Without a terminal, install applies without asking, while uninstall and restore only show what they would do unless given <code>--yes</code>. <code>--json</code> (install only) asks nothing and prints one JSON object with the result. <code>--dry-run</code> (install only) asks nothing either: it shows the plan for your saved answers (with <code>--reset</code>: the defaults) and ends with <code>Dry run: N changes, nothing written.</code> For tests and sandbox trials only: <code>--config-dir &lt;abs&gt;</code>, <code>--launcher-dir &lt;abs&gt;</code> and <code>--skip-claude</code>.</p>
+  <h3 id="development">Development</h3>
+  <div class="cmd"><code>npm test</code></div>
+  <div class="cmd"><code>npm run lint</code></div>
+  <div class="exp">No network, no dependencies, no real <code>~/.claude</code>. CI runs both on Ubuntu and macOS with Node 22 and 24.</div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="trouble">
+  <h2><span class="num">11</span>Troubleshooting</h2>
+  <p>Start with doctor, from your clone folder. Each line is <code>ok</code>, <code>warn</code>, <code>fail</code> or <code>skip</code>; a failing line says what to do.</p>
+  <div class="cmd"><code>node wf.mjs doctor</code></div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>You see</th><th>Do this</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code 2.1.x is older than 2.1.312</td><td>Run <code>claude update</code>, then install again.</td></tr>
+        <tr><td>manifest files: N of 103 differ (107 on Windows; fewer files when you left something out)</td><td>Install again: it repairs the changed files.</td></tr>
+        <tr><td>hook self-test: missing .../plugin/hooks/compact.mjs</td><td>Your install is older than your clone: an update brought the compaction module and it is not installed yet. Install again.</td></tr>
+        <tr><td>warn choices ... git is new: node wf.mjs install adds it (or debugger, or both: debugger, git are new)</td><td>Your install is older than that agent (an install from before the installer choices shows it after <b>no saved choices;</b>). Install again: the agents step shows it ticked.</td></tr>
+        <tr><td>Something broke right after an install</td><td><code>node wf.mjs restore</code> puts back the state before it; <code>--to &lt;stamp&gt;</code> picks another set (an unknown stamp lists them).</td></tr>
+        <tr><td>install failed after the backup: ...</td><td>The message says either that everything was put back from the backup already (fix the cause and install again) or which <code>node wf.mjs restore --to &lt;stamp&gt;</code> to run.</td></tr>
+        <tr><td>cannot install: ... Nothing was written.</td><td>A planned write failed its check before the backup: nothing changed. Fix the cause it names, then install again.</td></tr>
+        <tr><td>the hooks will run ... a node of a version manager</td><td>An nvm, fnm, asdf, volta, mise, nodenv or n node can disappear. Then the hooks stop working: the guard fails closed and blocks every git or gh command and every Monitor call, the context notices stop, and doctor's <code>hook node</code> line fails. Install with a node that stays (for example Homebrew's), or put <code>{"nodePath": "/absolute/path/to/node"}</code> in <code>~/.claude/ai-agents-setup/local.json</code> and install again. Install refuses a <code>nodePath</code> that is not node 22 or newer.</td></tr>
+        <tr><td>... is not on PATH. Add it: ...</td><td>Run the line it shows, open a new terminal, check with <code>command -v wf</code>. On Windows the hint is a PowerShell line that adds the launcher folder to your user PATH; check with <code>Get-Command wf.cmd</code>.</td></tr>
+        <tr><td>Cancelled: nothing was written.</td><td>Esc in any list, or Cancel on the summary: nothing changed. Run install again when you are ready.</td></tr>
+        <tr><td>Broken boxes, icons or colors in the installer</td><td>On macOS and Linux, <code>NO_COLOR=1 node wf.mjs install</code> turns only the colors off, and the command below asks the same steps with ASCII icons and no colors, as numbered questions: type the numbers to toggle, then press enter to accept.</td></tr>
+        <tr><td>A task runs at another tier, a coder writes the plan or does the review, a repeated failure gets another coder round instead of the debugger, or nothing is committed although you asked</td><td>That tier or agent is not installed (doctor's <code>choices</code> line names what is missing). Install again and tick it. With the debugger installed, a repeated failure still gets a coder round once the debugger already ran for it or has run twice in the task; with the git agent installed, an approved commit can still be skipped or blocked, and the report's git line says why.</td></tr>
+        <tr><td>A task got another tier than you expected, with everything installed</td><td>The tier follows difficulty and risk, not the number of files (<a href="#tier-rubric">6</a>). Start the request with <code>T0:</code>, <code>T1:</code>, <code>T2:</code>, <code>T3:</code>, <code>T4:</code> or <code>T5:</code> to force one.</td></tr>
+        <tr><td>wf guard: the orchestrator may not run "git ..."</td><td>Expected: the orchestrator runs read-only git only; commits, pushes and pull requests go through <code>wf:git</code> when the approved summary asks for them.</td></tr>
+        <tr><td>A task stopped half way</td><td>Start <code>wf</code> in that project again and answer Resume, Discard or Leave it. The question comes at your first message only when the session that ran the task has been inactive for at least 75 minutes; until then the task counts as still running and is left alone, so start <code>wf</code> again later.</td></tr>
+        <tr><td>A <code>wf context:</code> or <code>wf keep-warm:</code> line, or a message that starts with <code>wf compaction done</code></td><td>Normal wf housekeeping, not an error: context notices, the cache keep-warm and the orchestrator's own compaction (<a href="#context">8</a>). A <code>wf compaction done</code> message comes from the plugin and approves nothing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cmd"><code>TERM=dumb node wf.mjs install</code></div>
+  <div class="exp">The installer with ASCII icons, no colors and numbered questions, for a terminal that draws the boxes or icons wrong (macOS and Linux).</div>
+  <div class="grid">
+    <div class="card"><span class="h">Windows</span><p>Node: <code>winget install --id OpenJS.NodeJS.LTS -e</code>. Claude Code: <code>irm https://claude.ai/install.ps1 | iex</code> in PowerShell; an npm <code>claude.cmd</code> shim is refused (or set <code>WF_CLAUDE_BIN</code> to a <code>claude.exe</code>). Type <code>wf.cmd</code> in PowerShell and cmd, because plain <code>wf</code> opens the firewall console <code>WF.msc</code>; Git Bash keeps <code>wf</code>. The PATH hint is a PowerShell line that adds the launcher folder to your user PATH: run it, then open a new terminal. Paths: <code>%USERPROFILE%\.claude</code> and <code>%USERPROFILE%\.local\bin</code>.</p></div>
+    <div class="card"><span class="h">Linux</span><p>Distribution Node packages are often too old: <code>wf.mjs</code> prints the NodeSource steps when Node is below 22. Claude Code: <code>curl -fsSL https://claude.ai/install.sh | bash</code>.</p></div>
+  </div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+<section class="topic" id="uninstall">
+  <h2><span class="num">12</span>Uninstall</h2>
+  <p>From your clone folder. It shows what it removes and asks first:</p>
+  <div class="cmd"><code>node wf.mjs uninstall</code></div>
+  <div class="exp">Ends with <b>Removed N files. Backup: &lt;stamp&gt; (node wf.mjs restore puts it back).</b></div>
+  <ul>
+    <li>Removed: the plugin, the launcher, <code>wf-settings.json</code>, <code>rules/wf-house-rules.md</code>, the manifest and <code>state/</code>.</li>
+    <li>Kept: <code>backups/</code> and <code>adopted/</code> in the install folder, and your <code>local.json</code>. A <code>rules/house-rules.md</code> that v1 adopted is put back.</li>
+    <li>A v1 install is refused: run install first, which migrates it.</li>
+  </ul>
+  <p>Changed your mind? Put it all back:</p>
+  <div class="cmd"><code>node wf.mjs restore</code></div>
+  <p class="back"><a href="#contents">Back to contents</a></p>
+</section>
+
+</main>
+</div>
+
+<footer>wf v2.1.0, state on 11 November 2026 (after milestone M8: install choices and the guided installer, decision D109; the debugger for repeated failures, decision D110; up to 5 coders, a delegating orchestrator, tiers by difficulty and risk, the Concise style and the git agent, decisions D111 to D115; this guide with a navigation sidebar and no PDF, decision D116; nothing changes before an explicit approval and every discussion turn shows where things stand, decisions D117 and D119 to D121; the denied tools, decision D118; no ultracode in wf sessions, decision D122; the orchestrator compacts itself, decisions D123 and D124; session names, decision D125; five tiers T1 to T5 with a new model spread, icons, the time estimate, tiered session names and the docs-follow house rule, decisions D133 to D138; the planner at T1 and the git agent on medium effort, decision D140). Details: <code>README.md</code> and <code>docs/PLAN.md</code> in your clone.</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeButton = document.getElementById("theme");
+  var media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  function currentTheme() {
+    var set = root.getAttribute("data-theme");
+    if (set === "light" || set === "dark") return set;
+    return media && media.matches ? "dark" : "light";
+  }
+  function labelTheme() {
+    themeButton.textContent = currentTheme() === "dark" ? "Light mode" : "Dark mode";
+  }
+  themeButton.addEventListener("click", function () {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("wf-guide-theme", next); } catch (e) {}
+    labelTheme();
+  });
+  if (media && media.addEventListener) media.addEventListener("change", labelTheme);
+  labelTheme();
+
+  function copyFallback(text) {
+    var area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.top = "0";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    area.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(area);
+    return ok;
+  }
+  document.querySelectorAll(".cmd").forEach(function (box) {
+    var code = box.querySelector("code");
+    if (!code) return;
+    var text = code.textContent;
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "copybtn";
+    button.textContent = "Copy";
+    button.setAttribute("aria-label", "Copy the command " + text);
+    function show(label) {
+      button.textContent = label;
+      button.classList.add("done");
+      setTimeout(function () { button.textContent = "Copy"; button.classList.remove("done"); }, 1500);
+    }
+    button.addEventListener("click", function () {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function () { show("Copied"); }, function () { show(copyFallback(text) ? "Copied" : "Select and copy"); });
+      } else {
+        show(copyFallback(text) ? "Copied" : "Select and copy");
+      }
+    });
+    box.appendChild(button);
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section.topic[id]"));
+  var sideList = document.querySelector("#sidenav ol");
+  var mobileList = document.querySelector("#mobilemenu ol");
+  var mobileBar = document.getElementById("mobilebar");
+  var mobileMenu = document.getElementById("mobilemenu");
+  var mobileWhere = mobileBar ? mobileBar.querySelector(".where") : null;
+  var targets = [];
+  function headingParts(section) {
+    var heading = section.querySelector("h2");
+    var numEl = heading ? heading.querySelector(".num") : null;
+    var num = numEl ? numEl.textContent.trim() : "";
+    var title = heading ? heading.textContent.replace(num, "").trim() : section.id;
+    return { num: num, title: title };
+  }
+  function makeLink(href, num, title) {
+    var a = document.createElement("a");
+    a.className = "navlink";
+    a.href = href;
+    if (num) {
+      var n = document.createElement("span");
+      n.className = "n";
+      n.textContent = num;
+      a.appendChild(n);
+    }
+    var t = document.createElement("span");
+    t.textContent = title;
+    a.appendChild(t);
+    return a;
+  }
+  function addEntries(list, kind) {
+    sections.forEach(function (section) {
+      var parts = headingParts(section);
+      var li = document.createElement("li");
+      var link = makeLink("#" + section.id, parts.num, parts.title);
+      li.appendChild(link);
+      var subs = Array.prototype.slice.call(section.querySelectorAll("h3[id]"));
+      var subList = null;
+      if (subs.length) {
+        subList = document.createElement("ul");
+        subList.className = "sub";
+        li.appendChild(subList);
+      }
+      list.appendChild(li);
+      var sectionEntry = { el: section, link: link, li: li, parent: null, num: parts.num, title: parts.title, kind: kind };
+      targets.push(sectionEntry);
+      subs.forEach(function (sub) {
+        var subLi = document.createElement("li");
+        var subLink = makeLink("#" + sub.id, "", sub.textContent.trim());
+        subLi.appendChild(subLink);
+        subList.appendChild(subLi);
+        targets.push({ el: sub, link: subLink, li: subLi, parent: sectionEntry, num: parts.num, title: parts.title, kind: kind });
+      });
+    });
+  }
+  sections.forEach(function (section) {
+    Array.prototype.slice.call(section.querySelectorAll("h3")).forEach(function (sub) {
+      if (!sub.id) sub.id = section.id + "-" + sub.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    });
+  });
+  if (sections.length && sideList && mobileList) {
+    addEntries(sideList, "side");
+    addEntries(mobileList, "mobile");
+    root.classList.add("has-sidenav");
+  }
+  function setMenu(open) {
+    if (!mobileMenu) return;
+    mobileMenu.hidden = !open;
+    mobileBar.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  if (mobileBar) mobileBar.addEventListener("click", function () { setMenu(mobileMenu.hidden); });
+  if (mobileList) mobileList.addEventListener("click", function (event) { if (event.target.closest("a")) setMenu(false); });
+  var sideNav = document.getElementById("sidenav");
+  function keepVisible(link) {
+    if (!sideNav || sideNav.offsetParent === null) return;
+    var top = link.offsetTop;
+    var bottom = top + link.offsetHeight;
+    if (top < sideNav.scrollTop + 40) sideNav.scrollTop = Math.max(0, top - 40);
+    else if (bottom > sideNav.scrollTop + sideNav.clientHeight - 40) sideNav.scrollTop = bottom - sideNav.clientHeight + 40;
+  }
+  var lastKey = null;
+  function update() {
+    if (!targets.length) return;
+    var bar = document.getElementById("mobilenav");
+    var offset = (bar && bar.offsetHeight ? bar.offsetHeight : 0) + 90;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var activeIndex = -1;
+    var count = targets.length / 2;
+    for (var i = 0; i < count; i += 1) {
+      if (targets[i].el.getBoundingClientRect().top - offset <= 0) activeIndex = i;
+    }
+    if (atBottom) activeIndex = count - 1;
+    var key = String(activeIndex);
+    if (key === lastKey) return;
+    lastKey = key;
+    targets.forEach(function (entry, index) {
+      var same = index % count === activeIndex;
+      entry.link.classList.toggle("active", same);
+      if (same) entry.link.setAttribute("aria-current", "location");
+      else entry.link.removeAttribute("aria-current");
+      entry.link.classList.remove("within");
+      if (!entry.parent) entry.li.classList.remove("open");
+    });
+    if (activeIndex < 0) {
+      if (mobileWhere) mobileWhere.textContent = "Contents";
+      return;
+    }
+    [targets[activeIndex], targets[activeIndex + count]].forEach(function (entry) {
+      var section = entry.parent || entry;
+      section.li.classList.add("open");
+      if (entry.parent) entry.parent.link.classList.add("within");
+      if (entry.kind === "side") keepVisible(entry.link);
+    });
+    if (mobileWhere) {
+      var current = targets[activeIndex];
+      var label = current.parent ? current.title + ": " + current.el.textContent.trim() : current.title;
+      mobileWhere.textContent = "";
+      var n = document.createElement("span");
+      n.className = "n";
+      n.textContent = current.num;
+      mobileWhere.appendChild(n);
+      mobileWhere.appendChild(document.createTextNode(label));
+    }
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", function () { lastKey = null; update(); });
+  update();
+})();
+</script>
+</body>
+</html>

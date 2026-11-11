@@ -1,0 +1,363 @@
+{
+	"env": {
+		"CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": "1",
+		"CLAUDE_CODE_ENABLE_FUNCTION_HOOKS": "1"
+	},
+	"permissions": {
+		"deny": ["Agent(model:*)", "Agent(effort:*)"],
+		"defaultMode": "bypassPermissions"
+	},
+	"model": "claude-opus-5-5",
+	"disableClaudeAiConnectors": true,
+	"hooks": {
+		"PermissionRequest": [
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"PermissionRequest\",\"decision\":{\"behavior\":\"allow\"}}}'",
+						"timeout": 5
+					}
+				]
+			}
+		],
+		"PreToolUse": [
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*git*)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(cat *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(echo *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(printf *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(tee *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(sed *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(perl *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(python*)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(node *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(ruby *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*>*)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "PowerShell",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "PowerShell(*git*)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Monitor",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Edit|Write|NotebookEdit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "AskUserQuestion",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(py *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*gh *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*npm *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*npx *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*yarn *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*bun *)",
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/gate.mjs"],
+						"if": "Bash(*--test*)",
+						"timeout": 10
+					}
+				]
+			}
+		],
+		"SubagentStop": [
+			{
+				"matcher": "wf-coder-hard|wf-coder|wf-debugger|wf-docs|wf-git|wf-orchestrator|wf-plan-writer|wf-planner|wf-scout|wf-spec-writer|wf-test-writer-deep|wf-test-writer|wf-verifier-deep|wf-verifier",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/stop.mjs"],
+						"timeout": 900,
+						"statusMessage": "wf runner"
+					}
+				]
+			}
+		],
+		"SubagentStart": [
+			{
+				"matcher": "wf-coder-hard|wf-coder|wf-debugger|wf-docs|wf-git|wf-orchestrator|wf-plan-writer|wf-planner|wf-scout|wf-spec-writer|wf-test-writer-deep|wf-test-writer|wf-verifier-deep|wf-verifier",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/ledger.mjs"],
+						"timeout": 10
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/ledger.mjs"],
+						"timeout": 10
+					}
+				]
+			},
+			{
+				"matcher": "TaskStop",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "@@NODE@@",
+						"args": ["@@CONFIG@@/ai-agents-setup/hooks/ledger.mjs"],
+						"timeout": 10
+					}
+				]
+			}
+		]
+	},
+	"enableWorkflows": true,
+	"statusLine": {
+		"type": "command",
+		"command": "sh @@CONFIG@@/statusline-command.sh",
+		"refreshInterval": 1
+	},
+	"enabledPlugins": {
+		"example-plugin@example-marketplace": true
+	},
+	"outputStyle": "Concise",
+	"sandbox": {
+		"enabled": false
+	},
+	"effortLevel": "medium",
+	"ultracode": true,
+	"tui": "fullscreen",
+	"skipDangerousModePermissionPrompt": true,
+	"skipWorkflowUsageWarning": true,
+	"modelSettings": {
+		"claude-opus-5-5": {
+			"effortLevel": "medium"
+		}
+	}
+}

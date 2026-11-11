@@ -1,0 +1,5 @@
+#!/bin/sh
+export CLAUDE_CODE_THRIFTY_SONIC='0'
+export BASH_DEFAULT_TIMEOUT_MS='600000'
+export BASH_MAX_TIMEOUT_MS='600000'
+exec claude --agent wf-orchestrator "$@"

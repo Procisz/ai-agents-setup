@@ -1,0 +1,375 @@
+{
+  "schema": "wf.manifest/1",
+  "installedAt": "2026-09-29T07:09:56Z",
+  "updatedAt": "2026-10-19T12:21:59Z",
+  "repo": "@@REPO@@",
+  "repoHead": "dirty",
+  "configHome": "@@CONFIG@@",
+  "launcherDir": "@@LAUNCHER@@",
+  "platform": "darwin",
+  "milestone": "M5",
+  "nodePath": "@@NODE@@",
+  "files": [
+    {
+      "base": "config",
+      "path": "agents/Explore.md",
+      "sha256": "b13c675b32eb95afb4ca43d91fffe2da08c23cd24a01cd2d543082f4819c7818",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-coder-hard.md",
+      "sha256": "ac49743c9b2d76a9eb10b79b7b25baeb902a6850237561b66c37cfde94b58a09",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-coder.md",
+      "sha256": "e01f57567f3d129407b27865426f736ece6e2046dc8cc08f354fc183dc629b39",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-debugger.md",
+      "sha256": "3ef46ca14338cbe247318e6900b69e53ec84e5884022e82fa0766bd873732003",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-docs.md",
+      "sha256": "23bd9dee3108dcba55dcf3eb799bf9793795295c013025ee9ea298fbfa465812",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-git.md",
+      "sha256": "8d51fddc7c388d800cd9f8a58a0b3e8c078ffc96d1b15ad3e35f1df82aaa2975",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-orchestrator.md",
+      "sha256": "b4679aa87cc4fd15bd27743f6be44afac6a717761c2c08abd2119327856c9163",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-plan-writer.md",
+      "sha256": "7d38697b2da75f50a72938b77acac8c92338eef6bc686e2ef62e6a6154222fd7",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-planner.md",
+      "sha256": "a336bd66724ca874f8efef20b9612b79af631e079d6bff7c3a7511c5c5156ff4",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-scout.md",
+      "sha256": "531d627d3ba465361ffa7704896fe0e5092dfd594ed40d97be9585004c1c728c",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-spec-writer.md",
+      "sha256": "f5485460122df06b479c61cef6bfbebe5cba079f3a3c4fd23561da3cd1211ccd",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-test-writer-deep.md",
+      "sha256": "1b8d3a931804991b2796f48172ca40ce3df4ac8a72914c47e814573080fadaf8",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-test-writer.md",
+      "sha256": "2153b017fc725ec8a6bc34f08a961e16c435e4de7f4252e4edc3015952739095",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-verifier-deep.md",
+      "sha256": "06dfce43db97be4a7b7e43315156999f1c9af95864de515921c3804acb30bf2b",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "agents/wf-verifier.md",
+      "sha256": "8653babf419fccb52bbcfc8e507289145462f08844694917a8927b89abb387d5",
+      "kind": "agent"
+    },
+    {
+      "base": "config",
+      "path": "ai-agents-setup/hooks/common.mjs",
+      "sha256": "0a535bad3fe09f8a3b594caf7fb113ce4c9c7bec18c24865e2483ddf5b47250f",
+      "kind": "hook"
+    },
+    {
+      "base": "config",
+      "path": "ai-agents-setup/hooks/gate.mjs",
+      "sha256": "8bd84068849db1cf74863fdff2bc74704c33efb8fafe33347274fc758a63b302",
+      "kind": "hook"
+    },
+    {
+      "base": "config",
+      "path": "ai-agents-setup/hooks/ledger.mjs",
+      "sha256": "8bd84068849db1cf74863fdff2bc74704c33efb8fafe33347274fc758a63b302",
+      "kind": "hook"
+    },
+    {
+      "base": "config",
+      "path": "ai-agents-setup/hooks/policy.json",
+      "sha256": "233453bb3681607f6150ccc0a38c22f02dface55a253c31a9dffcc9620c7e4ea",
+      "kind": "policy"
+    },
+    {
+      "base": "config",
+      "path": "ai-agents-setup/hooks/shell.mjs",
+      "sha256": "1eb9eeec90c71faa779ff91676d957a825ee0853c2977c0a29444f662bcad88d",
+      "kind": "hook"
+    },
+    {
+      "base": "config",
+      "path": "ai-agents-setup/hooks/stop.mjs",
+      "sha256": "8bd84068849db1cf74863fdff2bc74704c33efb8fafe33347274fc758a63b302",
+      "kind": "hook"
+    },
+    {
+      "base": "config",
+      "path": "rules/wf-house-rules.md",
+      "sha256": "f31aea46f1c804fe3f638d556ccdbe17bbc4daf9873897272382208562fb2446",
+      "kind": "rule"
+    },
+    {
+      "base": "launcher",
+      "path": "wf",
+      "sha256": "e864f606a9f65847585c8fbbafd302999d71b41bd81ffca2d0ce62d0c30f8a98",
+      "kind": "launcher"
+    }
+  ],
+  "adopted": [
+    {
+      "path": "agents/Explore.md",
+      "replacedBy": "agents/Explore.md",
+      "sha256": "e0275d2e2ddcc7bca8a408f46a41c52f3e7a59dadbed4b51bfa76d1e34ae2e20",
+      "stamp": "20260929T070956Z"
+    },
+    {
+      "path": "rules/house-rules.md",
+      "replacedBy": "rules/wf-house-rules.md",
+      "sha256": "3acf1d30d08429610695288e03bee4053c6330c31ed9612a1906ee3da09f6090",
+      "stamp": "20260929T070956Z"
+    }
+  ],
+  "homeTrust": {
+    "file": "@@HOME@@/.claude.json",
+    "folder": "@@HOME@@",
+    "prior": false,
+    "entryCreated": false,
+    "created": false,
+    "stamp": "20261014T141728Z"
+  },
+  "settingsFileExisted": true,
+  "settings": {
+    "prior": {
+      "/modelSettings/claude-opus-5-5/effortLevel": {
+        "present": true,
+        "value": "high"
+      },
+      "/ultracode": {
+        "present": true,
+        "value": false
+      },
+      "/disableClaudeAiConnectors": {
+        "present": true,
+        "value": true
+      },
+      "/enableWorkflows": {
+        "present": true,
+        "value": true
+      },
+      "/env/CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": {
+        "present": false
+      },
+      "/permissions/defaultMode": {
+        "present": false
+      },
+      "/skipDangerousModePermissionPrompt": {
+        "present": false
+      }
+    },
+    "containers": [
+      "/env",
+      "/permissions",
+      "/permissions/deny",
+      "/hooks",
+      "/hooks/PreToolUse",
+      "/hooks/SubagentStop",
+      "/hooks/SubagentStart",
+      "/hooks/PostToolUse"
+    ],
+    "deny": [
+      {
+        "rule": "Agent(model:*)",
+        "preexisting": false
+      },
+      {
+        "rule": "Agent(effort:*)",
+        "preexisting": false
+      }
+    ],
+    "hooks": [
+      {
+        "id": "gate-bash",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*git*)"
+      },
+      {
+        "id": "gate-bash-cat",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(cat *)"
+      },
+      {
+        "id": "gate-bash-echo",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(echo *)"
+      },
+      {
+        "id": "gate-bash-printf",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(printf *)"
+      },
+      {
+        "id": "gate-bash-tee",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(tee *)"
+      },
+      {
+        "id": "gate-bash-sed",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(sed *)"
+      },
+      {
+        "id": "gate-bash-perl",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(perl *)"
+      },
+      {
+        "id": "gate-bash-python",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(python*)"
+      },
+      {
+        "id": "gate-bash-node",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(node *)"
+      },
+      {
+        "id": "gate-bash-ruby",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(ruby *)"
+      },
+      {
+        "id": "gate-bash-redirect",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*>*)"
+      },
+      {
+        "id": "gate-powershell",
+        "event": "PreToolUse",
+        "matcher": "PowerShell",
+        "if": "PowerShell(*git*)"
+      },
+      {
+        "id": "gate-monitor",
+        "event": "PreToolUse",
+        "matcher": "Monitor"
+      },
+      {
+        "id": "gate-files",
+        "event": "PreToolUse",
+        "matcher": "Edit|Write|NotebookEdit"
+      },
+      {
+        "id": "gate-ask",
+        "event": "PreToolUse",
+        "matcher": "AskUserQuestion"
+      },
+      {
+        "id": "gate-bash-py",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(py *)"
+      },
+      {
+        "id": "gate-bash-gh",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*gh *)"
+      },
+      {
+        "id": "gate-bash-npm",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*npm *)"
+      },
+      {
+        "id": "gate-bash-npx",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*npx *)"
+      },
+      {
+        "id": "gate-bash-yarn",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*yarn *)"
+      },
+      {
+        "id": "gate-bash-bun",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*bun *)"
+      },
+      {
+        "id": "gate-bash-node-test",
+        "event": "PreToolUse",
+        "matcher": "Bash",
+        "if": "Bash(*--test*)"
+      },
+      {
+        "id": "stop",
+        "event": "SubagentStop",
+        "matcher": "wf-coder-hard|wf-coder|wf-debugger|wf-docs|wf-git|wf-orchestrator|wf-plan-writer|wf-planner|wf-scout|wf-spec-writer|wf-test-writer-deep|wf-test-writer|wf-verifier-deep|wf-verifier"
+      },
+      {
+        "id": "ledger-start",
+        "event": "SubagentStart",
+        "matcher": "wf-coder-hard|wf-coder|wf-debugger|wf-docs|wf-git|wf-orchestrator|wf-plan-writer|wf-planner|wf-scout|wf-spec-writer|wf-test-writer-deep|wf-test-writer|wf-verifier-deep|wf-verifier"
+      },
+      {
+        "id": "ledger-bash",
+        "event": "PostToolUse",
+        "matcher": "Bash"
+      },
+      {
+        "id": "ledger-taskstop",
+        "event": "PostToolUse",
+        "matcher": "TaskStop"
+      }
+    ]
+  }
+}
