@@ -363,7 +363,7 @@ describe("main", () => {
     const plain = stripAnsi(text);
     assert.ok(ANSI.test(text), "colored");
     assert.ok(plain.includes("\u256d\u2500"), "a box");
-    assert.ok(plain.includes("wf 2.1.0 \u00b7 installer"));
+    assert.ok(plain.includes("wf 2.1.1 \u00b7 installer"));
     assert.ok(plain.includes(INSTALL_ABOUT));
     assert.ok(plain.includes("Step 1 of 5  \u{1F4CA} Tiers"));
     assert.ok(plain.includes("Step 5 of 5  \u{1F4CB} Summary"));

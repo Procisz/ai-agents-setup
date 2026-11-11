@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "plugin": {
     "name": "wf",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Personal tiered workflow: an orchestrator main thread, tier T1 to T5 workers, inlined skills, context handoffs and a per-agent prompt cache and keep-warm. Loaded only by the wf launcher.",
     "author": {
       "name": "Procisz"
@@ -292,7 +292,8 @@
       "BASH_MAX_TIMEOUT_MS": "600000",
       "CLAUDE_CODE_THRIFTY_SONIC": "0",
       "CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": "1",
-      "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "86.74"
+      "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "86.74",
+      "CLAUDE_CODE_DISABLE_FAST_MODE": "1"
     }
   },
   "wfSettings": {

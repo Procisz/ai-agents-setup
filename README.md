@@ -41,7 +41,7 @@ ls wf.mjs
 node wf.mjs install
 ```
 
-What you see in a terminal, in order: a header box (`wf 2.1.0 · installer`), your config and launcher folders, `✔ Claude Code 2.1.312` and `✔ Lint: 0 errors, 0 warnings`, then five steps, one question each: tiers, agents, models, skills and a summary (see [The five install steps](#the-five-install-steps)). To install everything with the recommended skills, press enter on every list and once more on Install (twelve presses on a first install: tiers, agents, models, one skills list for each of the eight roles, then Install). Then `✔ Applied 103 changes. Backup: <stamp> (node wf.mjs restore puts it back).` (103 on a fresh macOS or Linux install with everything ticked, 107 on Windows), `✔ verify: claude plugin validate passed`, `✔ verify: 103 files match.` and `Next: run wf in a project folder.` With a node from nvm or another version manager, a `⚠ The hooks will run ...` warning comes right after the Lint line (see Troubleshooting).
+What you see in a terminal, in order: a header box (`wf 2.1.1 · installer`), your config and launcher folders, `✔ Claude Code 2.1.312` and `✔ Lint: 0 errors, 0 warnings`, then five steps, one question each: tiers, agents, models, skills and a summary (see [The five install steps](#the-five-install-steps)). To install everything with the recommended skills, press enter on every list and once more on Install (twelve presses on a first install: tiers, agents, models, one skills list for each of the eight roles, then Install). Then `✔ Applied 103 changes. Backup: <stamp> (node wf.mjs restore puts it back).` (103 on a fresh macOS or Linux install with everything ticked, 107 on Windows), `✔ verify: claude plugin validate passed`, `✔ verify: 103 files match.` and `Next: run wf in a project folder.` With a node from nvm or another version manager, a `⚠ The hooks will run ...` warning comes right after the Lint line (see Troubleshooting).
 
 With `--yes`, or without a terminal, nothing is asked: instead of the five steps you get one line each for `Tiers:`, `Agents:`, `Models:` and `Skills:` and a line for each missing tier or agent and each unticked model that an installed agent was set to, then the plan and the result. Without a terminal (a pipe, CI) the output is plain text with no box, icons or wrapping, and no colors unless `FORCE_COLOR` is set: `wf install: <config folder> (launcher <folder>)`, `Claude Code 2.1.312`, `Lint: ...`, `Tiers: T1, T2, T3, T4, T5` and the other answer lines, a `note:` line for each missing tier or agent and each unticked model whose agents run on a stand-in, `Plan: 103 create, 0 update, 0 remove, 0 unchanged` with the folders, `Applied 97 changes. ...`, the verify lines and `Next: run wf in a project folder.`
 
@@ -113,7 +113,7 @@ A sample run, shortened (`...` marks cut lines): a first install with T5, the re
 ```text
   ╭───────────────────────────────────────────────────────────────────────╮
   │                                                                       │
-  │  wf 2.1.0 · installer                                                 │
+  │  wf 2.1.1 · installer                                                 │
   │  Sets up wf for Claude Code: agents, skills, hooks and the launcher.  │
   │                                                                       │
   ╰───────────────────────────────────────────────────────────────────────╯
@@ -550,13 +550,14 @@ export BASH_MAX_TIMEOUT_MS='600000'
 export CLAUDE_CODE_THRIFTY_SONIC='0'
 export CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH='1'
 export CLAUDE_AUTOCOMPACT_PCT_OVERRIDE='86.74'
+export CLAUDE_CODE_DISABLE_FAST_MODE='1'
 exec claude --plugin-dir '<install folder>/plugin' --settings '<install folder>/wf-settings.json' --agent wf:orchestrator "$@"
 ```
 
 - `--plugin-dir` loads the plugin `wf` (agents, hooks, helper commands) for this session only; it is never installed into Claude Code's plugin list.
 - `--settings` adds `wf-settings.json` (the allow rule for `mcp__wf__compact`, the deny rules for `Agent(model:*)`, `Agent(effort:*)` and the tools wf never uses, `"outputStyle": "Concise"` and `"ultracode": false`) on top of your normal settings, for this session only: a wf session never runs ultracode, even when your own settings turn it on.
 - Concise answers: the main thread of a wf session gets Claude Code's built-in Concise output style, which wins over a project's own `outputStyle`. Subagents never receive an output style, so every worker carries a short Reply style section in its rules instead: lead with the result, no preamble, no narration between tool calls, no recap, short by default, structure only when it carries structure, no hedging, full detail when the delegation asks for it, and never brevity at the cost of correctness (errors, failing checks, security warnings, blockers and every field of the result block stay complete). Plain `claude` sessions keep whatever style you set.
-- The environment lines exist only in the launcher: 10 minute Bash timeouts, workers cannot start agents of their own, the compaction trigger, and `CLAUDE_CODE_THRIFTY_SONIC=0`, which turns off a Claude Code reminder that tells agents to change files with sed, heredocs or scripts, so workers edit with Write and Edit (kept from v1, decisions D32 and D36).
+- The environment lines exist only in the launcher: 10 minute Bash timeouts, workers cannot start agents of their own, the compaction trigger, `CLAUDE_CODE_THRIFTY_SONIC=0`, which turns off a Claude Code reminder that tells agents to change files with sed, heredocs or scripts, so workers edit with Write and Edit (kept from v1, decisions D32 and D36), and `CLAUDE_CODE_DISABLE_FAST_MODE=1`, which turns off fast mode for every model in wf sessions.
 - A plain `claude` session sees no wf agent, skill, hook, setting or environment variable. The one global file is `~/.claude/rules/wf-house-rules.md`: the house rules apply in every Claude Code session on purpose.
 - Install never writes `~/.claude/settings.json`, except the one-time v1 migration.
 
@@ -608,7 +609,7 @@ All of them run from your clone folder as `node wf.mjs <command>`; `node wf.mjs 
     wf-settings.json                allow mcp__wf__compact, deny Agent(model:*), Agent(effort:*) and unused tools, outputStyle Concise, ultracode off, wf sessions only
     local.json                      optional and yours: {"nodePath": "<node for the hooks>"}
     plugin/
-      .claude-plugin/plugin.json    the plugin wf 2.1.0
+      .claude-plugin/plugin.json    the plugin wf 2.1.1
       agents/                       the agent files you chose (32 with everything), skills inlined
       library/                      the 16 skills, read on demand
       hooks/                        hooks.json, guard.mjs, git.mjs, context.mjs, compact.mjs (the compaction module), title.mjs (the session naming hook), config.json

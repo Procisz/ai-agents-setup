@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1 - 2026-11-11
+
+### Changed
+
+- wf sessions never use fast mode, for any model: the launcher sets `CLAUDE_CODE_DISABLE_FAST_MODE=1`.
+
 ## 2.1.0 - 2026-11-11
 
 ### Changed

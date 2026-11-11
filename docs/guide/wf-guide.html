@@ -456,7 +456,7 @@ header.top #theme { position: static; flex: 0 0 auto; }
   <p>Shortened (<code>...</code> marks cut lines): a first install with T5, the reviewer and Opus 5.5 unticked, as an 80 column terminal looks after Install.</p>
 <pre class="term"><span class="cy">  ╭───────────────────────────────────────────────────────────────────────╮
   │                                                                       │
-  │</span>  <span class="cy"><b>wf 2.1.0 · installer</b></span>                                                 <span class="cy">│
+  │</span>  <span class="cy"><b>wf 2.1.1 · installer</b></span>                                                 <span class="cy">│
   │</span>  Sets up wf for Claude Code: agents, skills, hooks and the launcher.  <span class="cy">│
   │                                                                       │
   ╰───────────────────────────────────────────────────────────────────────╯</span>
@@ -924,7 +924,7 @@ metadata:
 
   <h3 id="isolation">Isolation</h3>
   <div class="grid">
-    <div class="card opus"><span class="h">wf sessions</span><p>The launcher runs <code>claude --plugin-dir &lt;install folder&gt;/plugin --settings &lt;install folder&gt;/wf-settings.json --agent wf:orchestrator</code> with a few environment variables: 10 minute Bash timeouts, workers cannot start agents of their own, the compaction trigger (<a href="#context">8</a>), and <code>CLAUDE_CODE_THRIFTY_SONIC=0</code>, which turns off a Claude Code reminder to change files with sed or scripts, so workers edit with Write and Edit. The plugin, the settings and the variables exist for that session only.</p></div>
+    <div class="card opus"><span class="h">wf sessions</span><p>The launcher runs <code>claude --plugin-dir &lt;install folder&gt;/plugin --settings &lt;install folder&gt;/wf-settings.json --agent wf:orchestrator</code> with a few environment variables: 10 minute Bash timeouts, workers cannot start agents of their own, the compaction trigger (<a href="#context">8</a>), and <code>CLAUDE_CODE_THRIFTY_SONIC=0</code>, which turns off a Claude Code reminder to change files with sed or scripts, so workers edit with Write and Edit, and <code>CLAUDE_CODE_DISABLE_FAST_MODE=1</code>, which turns off fast mode for every model in wf sessions. The plugin, the settings and the variables exist for that session only.</p></div>
     <div class="card"><span class="h">Plain claude</span><p>No wf agent, skill, hook, setting or variable. The one global file is <code>~/.claude/rules/wf-house-rules.md</code>, on purpose. Install never writes <code>settings.json</code>, except the one-time v1 migration.</p></div>
     <div class="card sonnet"><span class="h">Concise answers</span><p><code>wf-settings.json</code> sets <code>"outputStyle": "Concise"</code>, Claude Code's built-in style, for the main thread; it wins over a project's own. Subagents never get an output style, so every worker's rules carry a short Reply style: lead with the result, no preamble or recap, short by default, but errors, failing checks, warnings and the result block always complete.</p></div>
   </div>
