@@ -9,6 +9,8 @@ flowchart LR
   A["You ask"] --> B["You approve one summary"] --> C["Agents do the work"] --> D["You get a short report"]
 ```
 
+![alt text](image.png)
+
 Each task is sized by its difficulty and risk into a tier, from T0 to T5. Only the helpers that the task needs take part, so small jobs stay small.
 
 wf is careful with your code. Nothing is committed, pushed or published unless the summary you approved asks for it.
