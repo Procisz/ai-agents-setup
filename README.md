@@ -15,4 +15,24 @@ Each task is sized by its difficulty and risk into a tier, from T0 to T5. Only t
 
 wf is careful with your code. Nothing is committed, pushed or published unless the summary you approved asks for it.
 
+## Pre-commit checks
+
+This repository ships a git pre-commit hook in `.githooks/`. Before each commit it runs `npm run lint` and `npm test`, and it blocks the commit when:
+
+- an added line has an em dash or an en dash,
+- an added line is a conflict marker,
+- a staged file is under `.work/`.
+
+A successful `node wf.mjs install` in a git clone sets the local `core.hooksPath` to `.githooks`, so no manual step is needed. Skip the checks for one commit with:
+
+```sh
+SKIP_TESTS=1 git commit -m "message"
+```
+
+Or skip the hook entirely with:
+
+```sh
+git commit --no-verify -m "message"
+```
+
 For installation, daily use and every detail, read the visual guide in docs/guide/wf-guide.html.

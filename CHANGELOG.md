@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- A pre-commit hook (`.githooks/pre-commit`) runs `npm run lint` and `npm test` and blocks em or en dashes in added lines, conflict markers and `.work/` files. A successful `node wf.mjs install` enables it by setting `core.hooksPath` to `.githooks` in a git clone.
+
 ## 2.1.2 - 2026-11-12
 
 ### Added
