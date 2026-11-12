@@ -41,7 +41,7 @@ ls wf.mjs
 node wf.mjs install
 ```
 
-What you see in a terminal, in order: a header box (`wf 2.1.1 · installer`), your config and launcher folders, `✔ Claude Code 2.1.312` and `✔ Lint: 0 errors, 0 warnings`, then five steps, one question each: tiers, agents, models, skills and a summary (see [The five install steps](#the-five-install-steps)). To install everything with the recommended skills, press enter on every list and once more on Install (twelve presses on a first install: tiers, agents, models, one skills list for each of the eight roles, then Install). Then `✔ Applied 103 changes. Backup: <stamp> (node wf.mjs restore puts it back).` (103 on a fresh macOS or Linux install with everything ticked, 107 on Windows), `✔ verify: claude plugin validate passed`, `✔ verify: 103 files match.` and `Next: run wf in a project folder.` With a node from nvm or another version manager, a `⚠ The hooks will run ...` warning comes right after the Lint line (see Troubleshooting).
+What you see in a terminal, in order: a header box (`wf 2.1.2 · installer`), your config and launcher folders, `✔ Claude Code 2.1.312` and `✔ Lint: 0 errors, 0 warnings`, then five steps, one question each: tiers, agents, models, skills and a summary (see [The five install steps](#the-five-install-steps)). To install everything with the recommended skills, press enter on every list and once more on Install (twelve presses on a first install: tiers, agents, models, one skills list for each of the eight roles, then Install). Then `✔ Applied 103 changes. Backup: <stamp> (node wf.mjs restore puts it back).` (103 on a fresh macOS or Linux install with everything ticked, 107 on Windows), `✔ verify: claude plugin validate passed`, `✔ verify: 103 files match.` and `Next: run wf in a project folder.` With a node from nvm or another version manager, a `⚠ The hooks will run ...` warning comes right after the Lint line (see Troubleshooting).
 
 With `--yes`, or without a terminal, nothing is asked: instead of the five steps you get one line each for `Tiers:`, `Agents:`, `Models:` and `Skills:` and a line for each missing tier or agent and each unticked model that an installed agent was set to, then the plan and the result. Without a terminal (a pipe, CI) the output is plain text with no box, icons or wrapping, and no colors unless `FORCE_COLOR` is set: `wf install: <config folder> (launcher <folder>)`, `Claude Code 2.1.312`, `Lint: ...`, `Tiers: T1, T2, T3, T4, T5` and the other answer lines, a `note:` line for each missing tier or agent and each unticked model whose agents run on a stand-in, `Plan: 103 create, 0 update, 0 remove, 0 unchanged` with the folders, `Applied 97 changes. ...`, the verify lines and `Next: run wf in a project folder.`
 
@@ -113,7 +113,7 @@ A sample run, shortened (`...` marks cut lines): a first install with T5, the re
 ```text
   ╭───────────────────────────────────────────────────────────────────────╮
   │                                                                       │
-  │  wf 2.1.1 · installer                                                 │
+  │  wf 2.1.2 · installer                                                 │
   │  Sets up wf for Claude Code: agents, skills, hooks and the launcher.  │
   │                                                                       │
   ╰───────────────────────────────────────────────────────────────────────╯
@@ -609,7 +609,7 @@ All of them run from your clone folder as `node wf.mjs <command>`; `node wf.mjs 
     wf-settings.json                allow mcp__wf__compact, deny Agent(model:*), Agent(effort:*) and unused tools, outputStyle Concise, ultracode off, wf sessions only
     local.json                      optional and yours: {"nodePath": "<node for the hooks>"}
     plugin/
-      .claude-plugin/plugin.json    the plugin wf 2.1.1
+      .claude-plugin/plugin.json    the plugin wf 2.1.2
       agents/                       the agent files you chose (32 with everything), skills inlined
       library/                      the 16 skills, read on demand
       hooks/                        hooks.json, guard.mjs, git.mjs, context.mjs, compact.mjs (the compaction module), title.mjs (the session naming hook), config.json

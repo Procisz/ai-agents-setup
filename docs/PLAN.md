@@ -206,7 +206,7 @@ appDir/
   manifest.json            wf.manifest/2
   wf-settings.json         permissions.allow mcp__wf__compact (D123); permissions.deny Agent(model:*), Agent(effort:*) and the unused tools (D118); outputStyle Concise (D114); ultracode false (D122)
   plugin/
-    .claude-plugin/plugin.json   {"name": "wf", "version": "2.1.1", "description": ..., "author": {"name": "Procisz"}}
+    .claude-plugin/plugin.json   {"name": "wf", "version": "2.1.2", "description": ..., "author": {"name": "Procisz"}}
     agents/<agent>.md            32 files with everything installed, skills inlined
     library/<skill>/...          16 skills
     hooks/hooks.json             PreToolUse guard, PostToolUse context, PostToolUse Write title, UserPromptSubmit title, PreCompact context; modules ./compact.mjs (D123)

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "plugin": {
     "name": "wf",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "Personal tiered workflow: an orchestrator main thread, tier T1 to T5 workers, inlined skills, context handoffs and a per-agent prompt cache and keep-warm. Loaded only by the wf launcher.",
     "author": {
       "name": "Procisz"

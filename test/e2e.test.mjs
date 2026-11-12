@@ -217,7 +217,7 @@ describe("end to end: install the real repo sources into a sandbox", () => {
   test("the plugin holds the manifest, the 32 agents and nothing outside the agreed folders", () => {
     const plugin = JSON.parse(fs.readFileSync(path.join(state.pluginDir, ".claude-plugin", "plugin.json"), "utf8"));
     assert.equal(plugin.name, "wf");
-    assert.equal(plugin.version, "2.1.1");
+    assert.equal(plugin.version, "2.1.2");
     assert.equal(typeof plugin.description, "string");
     assert.deepEqual(plugin.author, { name: "Procisz" });
     assert.deepEqual(fs.readdirSync(path.join(state.pluginDir, "agents")).sort(), AGENTS.map((name) => `${name}.md`).sort());
