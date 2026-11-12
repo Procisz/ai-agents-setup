@@ -6,7 +6,7 @@ With wf, you describe a change you want in a project and approve one short summa
 
 ```mermaid
 flowchart LR
-  A["You ask"] --> B["You approve one summary"] --> C["Helpers do the work"] --> D["You get a short report"]
+  A["You ask"] --> B["You approve one summary"] --> C["Agents do the work"] --> D["You get a short report"]
 ```
 
 Each task is sized by its difficulty and risk into a tier, from T0 to T5. Only the helpers that the task needs take part, so small jobs stay small.
