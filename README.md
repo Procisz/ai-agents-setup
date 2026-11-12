@@ -674,7 +674,7 @@ npm test
 npm run lint
 ```
 
-`npm test` runs the `node:test` suite: no network, no dependencies, and no real `~/.claude` (every install test uses temporary folders). `npm run lint` is `node wf.mjs lint --self`: the source lint plus the house rules over the repository (no comments in `.mjs` and `.js` except TODO, no U+2012 to U+2015 in text files, LF line endings, no BOM). CI runs both on Ubuntu and macOS with Node 22 and 24.
+`npm test` runs the `node:test` suite: no network, no dependencies, and no real `~/.claude` (every install test uses temporary folders). `npm run lint` is `node wf.mjs lint --self`: the source lint plus the house rules over the repository (no comments in `.mjs` and `.js` except TODO, no U+2012 to U+2015 in text files, LF line endings, no BOM). CI runs both on Ubuntu and macOS with Node 22 and 24. A separate CodeQL workflow (`.github/workflows/codeql.yml`) scans the JavaScript on every push and pull request to main, and weekly.
 
 The visual guide is `docs/guide/wf-guide.html`: open it in a browser.
 
@@ -697,7 +697,8 @@ scripts/               wf-agents, wf-clean, wf-keepwarm
 test/                  the test suite and its fixtures
 docs/                  PLAN.md (the v2 plan), decisions.md, PROGRESS.md, guide/wf-guide.html
 local.example.json     the shape of local.json
-.github/workflows/     ci.yml
+.github/workflows/     ci.yml, codeql.yml
+.github/CODEOWNERS     @Procisz owns every file
 ```
 
 Code style: zero dependencies, Node 22+, ESM `.mjs`, English, no comments except TODO, no em or en dashes, LF. The plan is `docs/PLAN.md`, the decisions are in `docs/decisions.md` (v2 from D105), and v1 lives in git history (last v1 commit `5d1d6f3`).

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.2 - 2026-11-12
+
+### Added
+
+- A CODEOWNERS file (`.github/CODEOWNERS`) makes @Procisz the code owner of every file.
+- A CodeQL scanning workflow (`.github/workflows/codeql.yml`) scans the JavaScript on every push and pull request to main, and weekly.
+
 ## 2.1.1 - 2026-11-11
 
 ### Changed
