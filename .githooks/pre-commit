@@ -1,0 +1,48 @@
+#!/bin/sh
+if [ "${SKIP_TESTS:-}" = "1" ]; then
+	echo "pre-commit: SKIP_TESTS=1, every check skipped"
+	exit 0
+fi
+hook_dir="$(cd "$(dirname "$0")" && pwd)"
+cd "$(git rev-parse --show-toplevel)" || exit 1
+. "$hook_dir/lib.sh"
+if ! resolve_node; then
+	echo "pre-commit: npm or node not found (git starts hooks with a reduced PATH); run from a terminal or set SKIP_TESTS=1" >&2
+	exit 1
+fi
+
+en_dash="$(printf '\342\200\223')"
+em_dash="$(printf '\342\200\224')"
+
+work_files="$(git diff --cached --name-only | awk '/^\.work\// { print "pre-commit: " $0 ": staged task file under .work/" }')"
+
+added_lines="$(git diff --cached -U0 --no-color | awk -v en="$en_dash" -v em="$em_dash" '
+/^\+\+\+ / { file = substr($0, 7); next }
+/^@@ / { split($3, range, ","); line = substr(range[1], 2) - 1; next }
+/^\+/ {
+	line++
+	text = substr($0, 2)
+	if (index(text, en) > 0 || index(text, em) > 0) print "pre-commit: " file ":" line ": em or en dash in added line"
+	if (substr(text, 1, 7) == "<<<<<<<" || text == "=======" || substr(text, 1, 7) == ">>>>>>>") print "pre-commit: " file ":" line ": conflict marker in added line"
+}
+')"
+
+findings="$(printf '%s\n%s\n' "$work_files" "$added_lines" | grep -v '^$')"
+if [ -n "$findings" ]; then
+	printf '%s\n' "$findings" >&2
+	exit 1
+fi
+
+echo "pre-commit 1/2: npm run lint"
+if ! output="$(npm run lint 2>&1)"; then
+	printf '%s\n' "$output" >&2
+	exit 1
+fi
+
+echo "pre-commit 2/2: npm test"
+if ! output="$(npm test 2>&1)"; then
+	printf '%s\n' "$output" >&2
+	exit 1
+fi
+
+echo "pre-commit: every check passed"

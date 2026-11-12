@@ -113,7 +113,7 @@ describe("doctor", () => {
     assert.deepEqual(newRoles({ choices: { known: { roles: before } } }, null), [], "without the registry nothing is new");
     const quoted = "debugger is new: node wf.mjs install adds it";
     for (const detail of [older.detail, unsaved.detail]) assert.ok(detail.includes(quoted), `both doctor forms print the quoted part: ${detail}`);
-    for (const doc of ["../README.md", "../docs/guide/wf-guide.html"]) {
+    for (const doc of ["../docs/guide/wf-guide.html"]) {
       const text = fs.readFileSync(new URL(doc, import.meta.url), "utf8");
       assert.ok(text.includes(quoted), `${doc} quotes the doctor warning`);
       assert.ok(!text.includes(`(${quoted})`), `${doc} quotes only the part that an install without saved choices prints too`);

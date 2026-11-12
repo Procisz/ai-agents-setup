@@ -491,6 +491,53 @@ describe("main", () => {
   });
 });
 
+describe("install sets core.hooksPath", () => {
+  const gitEnv = { PATH: process.env.PATH };
+  const withGit = (paths) => ({ PATH: `${paths.launcherDir}${path.delimiter}${process.env.PATH}` });
+  const hookRepo = (t, { git = true } = {}) => {
+    const ctx = setup(t);
+    fs.mkdirSync(path.join(ctx.repoRoot, ".githooks"), { recursive: true });
+    fs.writeFileSync(path.join(ctx.repoRoot, ".githooks", "pre-commit"), "#!/bin/sh\n");
+    if (git) assert.equal(spawnSync("git", ["init", "-q", ctx.repoRoot], { encoding: "utf8", env: gitEnv }).status, 0);
+    return ctx;
+  };
+  const hooksPath = (repoRoot) => {
+    const result = spawnSync("git", ["-C", repoRoot, "config", "--local", "--get", "core.hooksPath"], { encoding: "utf8", env: gitEnv });
+    return result.status === 0 ? result.stdout.trim() : null;
+  };
+
+  test("a successful install in a git clone sets core.hooksPath to .githooks and says so", async (t) => {
+    const ctx = hookRepo(t);
+    const result = await ctx.go(["install", "--yes", "--skip-claude", ...ctx.flags], { env: withGit(ctx.paths) });
+    assert.equal(result.code, 0, result.io.text());
+    assert.equal(hooksPath(ctx.repoRoot), ".githooks");
+    assert.ok(result.io.lines.includes("git hooks: core.hooksPath set to .githooks"), result.io.text());
+  });
+
+  test("an install outside a git clone sets nothing and prints no git hooks line", async (t) => {
+    const ctx = hookRepo(t, { git: false });
+    const result = await ctx.go(["install", "--yes", "--skip-claude", ...ctx.flags], { env: withGit(ctx.paths) });
+    assert.equal(result.code, 0, result.io.text());
+    assert.equal(fs.existsSync(path.join(ctx.repoRoot, ".git")), false);
+    assert.ok(!result.io.text().includes("git hooks"), result.io.text());
+  });
+
+  test("an install that fails after writing leaves core.hooksPath unset", async (t) => {
+    const ctx = hookRepo(t);
+    const result = await ctx.go(["install", "--yes", ...ctx.flags], { env: { ...withGit(ctx.paths), WF_CLAUDE_BIN: FAKE_CLAUDE, FAKE_CLAUDE_VALIDATE: "fail" } });
+    assert.equal(result.code, 1, result.io.text());
+    assert.equal(hooksPath(ctx.repoRoot), null);
+  });
+
+  test("a dry run in a git clone leaves core.hooksPath unset", async (t) => {
+    const ctx = hookRepo(t);
+    const result = await ctx.go(["install", "--yes", "--dry-run", "--skip-claude", ...ctx.flags], { env: withGit(ctx.paths) });
+    assert.equal(result.code, 0, result.io.text());
+    assert.equal(hooksPath(ctx.repoRoot), null);
+    assert.ok(!result.io.text().includes("git hooks"), result.io.text());
+  });
+});
+
 describe("hook node path", () => {
   test("a version manager node is recognised", () => {
     for (const nodePath of ["/Users/a/.nvm/versions/node/v24.16.0/bin/node", "/home/a/.local/share/fnm/node-versions/v22.1.0/installation/bin/node", "/home/a/.asdf/installs/nodejs/22.1.0/bin/node", "/home/a/.volta/tools/image/node/22.1.0/bin/node", "/home/a/.local/share/mise/installs/node/22/bin/node", "C:\\Users\\a\\.nvm\\versions\\node\\v22\\node.exe"]) {
