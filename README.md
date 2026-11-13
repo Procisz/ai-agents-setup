@@ -1,6 +1,6 @@
 # ai-agents-setup
 
-This repository holds wf, a personal workflow for Claude Code.
+This repository holds wf, a personal workflow for Claude Code CLI.
 
 With wf, you describe a change you want in a project and approve one short summary. Then helper agents take over: one plans the work, others write the docs, write the code, test it and review it. At the end you get a short report.
 
